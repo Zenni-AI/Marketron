@@ -1,0 +1,21 @@
+{
+  "name": "marketron",
+  "private": true,
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @marketron/web dev",
+    "build": "pnpm -r --workspace-concurrency=1 build",
+    "test": "pnpm -r --workspace-concurrency=1 test",
+    "typecheck": "pnpm -r --workspace-concurrency=1 typecheck",
+    "seed:sample": "tsx scripts/seed-sample-assets.ts",
+    "db:generate": "pnpm --filter @marketron/core db:generate",
+    "db:push": "pnpm --filter @marketron/core db:push"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "tsx": "^4.16.2"
+  }
+}

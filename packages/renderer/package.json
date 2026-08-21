@@ -1,0 +1,33 @@
+{
+  "name": "@marketron/renderer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "studio": "remotion studio src/index.ts"
+  },
+  "dependencies": {
+    "@marketron/core": "workspace:*",
+    "remotion": "^4.0.515",
+    "@remotion/cli": "^4.0.515",
+    "@remotion/bundler": "^4.0.515",
+    "@remotion/renderer": "^4.0.515",
+    "@remotion/transitions": "^4.0.515",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.9",
+    "@types/node": "^20.14.15",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "ffmpeg-static": "^5.3.0",
+    "ffprobe-static": "^3.1.0",
+    "@types/ffprobe-static": "^2.0.3"
+  }
+}

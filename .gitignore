@@ -141,3 +141,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Marketron runtime data
+/storage/
+packages/core/prisma/dev.db
+packages/core/prisma/dev.db-journal
+*.tsbuildinfo
+apps/web/.next/
