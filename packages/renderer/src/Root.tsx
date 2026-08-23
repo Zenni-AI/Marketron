@@ -19,7 +19,7 @@ const DEFAULT_TEMPLATE: Template = {
   id: "before-after-hook",
   name: "Before/After Hook",
   description: "Studio preview placeholder — real renders always pass the actual template.",
-  maxClips: 6,
+  maxClips: 18,
   captionStyle: {
     fontFamily: "Inter, Helvetica, Arial, sans-serif",
     fontSizePct: 6,
@@ -29,7 +29,7 @@ const DEFAULT_TEMPLATE: Template = {
   },
   logoPosition: "bottom-right",
   logoSizePct: 12,
-  defaultTransition: { type: "fade", durationSec: 0.4 },
+  defaultTransition: { type: "slide", durationSec: 0.45 },
   hookDurationSec: 2,
 };
 

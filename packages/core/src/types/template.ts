@@ -14,7 +14,7 @@ export const CaptionStyleSchema = z.object({
 });
 export type CaptionStyle = z.infer<typeof CaptionStyleSchema>;
 
-export const TransitionTypeSchema = z.enum(["cut", "fade"]);
+export const TransitionTypeSchema = z.enum(["cut", "fade", "slide"]);
 export type TransitionType = z.infer<typeof TransitionTypeSchema>;
 
 export const TransitionSchema = z.object({

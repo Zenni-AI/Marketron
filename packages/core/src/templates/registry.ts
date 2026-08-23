@@ -11,7 +11,7 @@ export const beforeAfterHookTemplate: Template = {
   name: "Before/After Hook",
   description:
     "Opens on the strongest hook moment, contrasts a before/after pair, closes on a branded logo card. Best for jobs with clear before/after photos or clips.",
-  maxClips: 6,
+  maxClips: 18,
   captionStyle: {
     fontFamily: "Inter, Helvetica, Arial, sans-serif",
     fontSizePct: 6,
@@ -21,7 +21,7 @@ export const beforeAfterHookTemplate: Template = {
   },
   logoPosition: "bottom-right",
   logoSizePct: 12,
-  defaultTransition: { type: "fade", durationSec: 0.4 },
+  defaultTransition: { type: "slide", durationSec: 0.45 },
   hookDurationSec: 2,
 };
 
