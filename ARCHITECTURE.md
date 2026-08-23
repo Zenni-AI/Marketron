@@ -64,6 +64,23 @@ sent directly. This is intentionally lossy — frame sampling is a proxy for
 "seeing" the clip — which is also why the system prompt tells the model to
 be conservative about clip quality when it's ambiguous.
 
+### Runtime scales with material, not a fixed clip count
+
+Real social ad content for a business runs ~20-40 seconds and uses most of
+the good material a job actually has — an early version of the prompt
+capped this at "8-20 seconds" and a 6-clip template limit, which reliably
+produced ~11 second videos that ignored most of what was uploaded. The
+system prompt now frames length as a *consequence* of how much strong
+material exists (a rich job should use most of it and land in the 20-40s
+range; a thin job should stay honestly short rather than being padded/
+looped to hit a target), and `before-after-hook`'s `maxClips` was raised
+from 6 to 18 so the model isn't structurally capped below that. On the
+render side, photos get a Ken-Burns pan/zoom (`EditPlanComposition.tsx`)
+instead of sitting as a dead static frame, and `TransitionType` now
+includes `slide` alongside `cut`/`fade` — both are purely mechanical
+rendering choices (no content judgment), so they live in the renderer, not
+the prompt.
+
 ### Transcription is stubbed, not built
 
 `Transcriber` is an interface with a `NoopTranscriber` default. Job-site
@@ -86,6 +103,18 @@ The DB is Prisma + SQLite for zero-config local dev. `Asset` already has an
 already-analyzed jobs" cache the spec calls out for scaling to 500+ file
 batches — the intent is that ingestion can grow into using it without a
 schema migration.
+
+### Assets are a shared library, not job-owned
+
+`Asset` has no `jobId`. A job's working set of assets is recorded in a
+`JobAsset` join table (`{ jobId, assetId }`), so the same uploaded clip or
+photo can be reused across multiple jobs without re-uploading — upload once,
+then pick from your library on any future job. `apps/web/lib/assets.ts` has
+the three operations everything else is built from: `saveUploadedFilesToLibrary`
+(upload → library, not a job), `linkAssetsToJob` (attach existing library
+assets to a job, idempotent), `getJobAssets` (a job's current asset set, via
+the join). `/library` browses the whole pool; a job's detail page lets you
+pick from it and/or upload new files in the same step.
 
 ### Why the renderer needs a local HTTP server mid-render
 

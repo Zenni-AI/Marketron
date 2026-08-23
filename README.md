@@ -51,11 +51,17 @@ everything else works without it.
 ### Try it without real footage
 
 ```bash
-pnpm seed:sample   # creates one demo job with synthetic clips/photos + a
-                    # placeholder brand logo, so you can exercise the full
+pnpm seed:sample   # adds 3 clips + 2 before/after photo pairs to the shared
+                    # library, attached to one demo job, plus a placeholder
+                    # brand logo — enough material to exercise a real
                     # upload -> plan -> render -> review loop immediately
 pnpm dev            # http://localhost:3000
 ```
+
+Uploaded assets aren't tied to a single job — they land in a shared library
+(`/library`) you can pick from on any future job instead of re-uploading. On
+a job's page, "Add assets" lets you select from the library and/or upload
+new files in the same step.
 
 ## Commands
 
