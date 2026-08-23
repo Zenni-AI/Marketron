@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useState } from "react";
 
 interface AssetDto {
   id: string;
@@ -43,14 +43,87 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
   const [busy, setBusy] = useState<"plan" | "render" | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const [library, setLibrary] = useState<AssetDto[] | null>(null);
+  const [libraryError, setLibraryError] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [linking, setLinking] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
   const load = useCallback(async () => {
     const res = await fetch(`/api/jobs/${id}`);
     if (res.ok) setData(await res.json());
   }, [id]);
 
+  const loadLibrary = useCallback(async () => {
+    const res = await fetch("/api/assets");
+    if (res.ok) {
+      const body = await res.json();
+      setLibrary(body.assets);
+    } else {
+      setLibraryError("Failed to load library.");
+    }
+  }, []);
+
   useEffect(() => {
     load();
-  }, [load]);
+    loadLibrary();
+  }, [load, loadLibrary]);
+
+  const jobAssetIds = useMemo(() => new Set(data?.assets.map((a) => a.id) ?? []), [data]);
+  const pickableLibrary = useMemo(
+    () => (library ?? []).filter((asset) => !jobAssetIds.has(asset.id)),
+    [library, jobAssetIds],
+  );
+
+  function toggleSelected(assetId: string) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(assetId)) next.delete(assetId);
+      else next.add(assetId);
+      return next;
+    });
+  }
+
+  async function addSelected() {
+    if (selectedIds.size === 0) return;
+    setLinking(true);
+    setLibraryError(null);
+    try {
+      const res = await fetch(`/api/jobs/${id}/assets/link`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ assetIds: [...selectedIds] }),
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error ?? "Failed to add assets.");
+      setSelectedIds(new Set());
+      await load();
+    } catch (err) {
+      setLibraryError(err instanceof Error ? err.message : "Failed to add assets.");
+    } finally {
+      setLinking(false);
+    }
+  }
+
+  async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    setLibraryError(null);
+    try {
+      const formData = new FormData();
+      for (const file of Array.from(files)) formData.append("files", file);
+      const res = await fetch(`/api/jobs/${id}/assets`, { method: "POST", body: formData });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error ?? "Upload failed.");
+      await Promise.all([load(), loadLibrary()]);
+    } catch (err) {
+      setLibraryError(err instanceof Error ? err.message : "Upload failed.");
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
+  }
 
   async function generatePlan() {
     setBusy("plan");
@@ -103,6 +176,74 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
       <p className="subtitle">
         <span className="badge">{job.status}</span>
       </p>
+
+      <section className="card">
+        <h2>Add assets</h2>
+
+        {library !== null && (
+          <>
+            <p className="subtitle" style={{ marginBottom: 12 }}>
+              Pick from your library ({pickableLibrary.length} available), or upload something new.
+            </p>
+            {pickableLibrary.length === 0 ? (
+              <p className="subtitle">
+                Nothing else in your library yet — everything you&apos;ve uploaded is already on this job.
+              </p>
+            ) : (
+              <div className="asset-grid">
+                {pickableLibrary.map((asset) => {
+                  const checked = selectedIds.has(asset.id);
+                  return (
+                    <label
+                      key={asset.id}
+                      className="asset-thumb"
+                      style={{ position: "relative", cursor: "pointer", border: checked ? "2px solid var(--accent)" : undefined }}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => toggleSelected(asset.id)}
+                        style={{ position: "absolute", top: 6, left: 6, width: 18, height: 18, zIndex: 1 }}
+                      />
+                      {asset.kind === "photo" ? (
+                        <img src={`/api/media/${asset.filePath}`} alt={asset.originalName} />
+                      ) : (
+                        <video src={`/api/media/${asset.filePath}`} muted />
+                      )}
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+            <div className="actions">
+              <button
+                className="button"
+                onClick={addSelected}
+                disabled={selectedIds.size === 0 || linking}
+              >
+                {linking ? "Adding…" : `Add selected (${selectedIds.size})`}
+              </button>
+            </div>
+          </>
+        )}
+
+        <div style={{ marginTop: 20 }}>
+          <label htmlFor="job-files" style={{ display: "block", marginBottom: 6, fontSize: 14 }}>
+            Or upload new clips & photos
+          </label>
+          <input
+            id="job-files"
+            type="file"
+            multiple
+            accept="video/*,image/*"
+            onChange={handleUpload}
+            disabled={uploading}
+          />
+          {uploading && <p className="subtitle" style={{ marginTop: 6 }}>Uploading…</p>}
+        </div>
+
+        {libraryError && <p className="error">{libraryError}</p>}
+      </section>
 
       <section className="card">
         <h2>Assets ({assets.length})</h2>

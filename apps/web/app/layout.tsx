@@ -27,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             Marketron
           </Link>
           <Link href="/jobs/new">New job</Link>
+          <Link href="/library">Library</Link>
           <Link href="/queue">Review queue</Link>
         </nav>
         {children}

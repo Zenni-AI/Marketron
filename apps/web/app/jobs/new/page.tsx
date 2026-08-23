@@ -6,7 +6,6 @@ import { useState } from "react";
 export default function NewJobPage() {
   const router = useRouter();
   const [name, setName] = useState("");
-  const [files, setFiles] = useState<FileList | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,16 +22,6 @@ export default function NewJobPage() {
       if (!jobRes.ok) throw new Error((await jobRes.json()).error ?? "Failed to create job");
       const { job } = await jobRes.json();
 
-      if (files && files.length > 0) {
-        const formData = new FormData();
-        for (const file of Array.from(files)) formData.append("files", file);
-        const uploadRes = await fetch(`/api/jobs/${job.id}/assets`, {
-          method: "POST",
-          body: formData,
-        });
-        if (!uploadRes.ok) throw new Error((await uploadRes.json()).error ?? "Upload failed");
-      }
-
       router.push(`/jobs/${job.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
@@ -44,8 +33,8 @@ export default function NewJobPage() {
     <main className="container">
       <h1>New job</h1>
       <p className="subtitle">
-        Upload this job&apos;s raw clips and before/after photos. You&apos;ll generate the AI edit
-        plan and render it on the next screen.
+        Give the job a name, then add clips and photos on the next screen — either picked from your
+        library or freshly uploaded.
       </p>
 
       <form className="card" onSubmit={handleSubmit}>
@@ -59,19 +48,6 @@ export default function NewJobPage() {
             placeholder="e.g. Smith backyard patio"
             value={name}
             onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-
-        <div style={{ marginBottom: 16 }}>
-          <label htmlFor="job-files" style={{ display: "block", marginBottom: 6, fontSize: 14 }}>
-            Clips & photos
-          </label>
-          <input
-            id="job-files"
-            type="file"
-            multiple
-            accept="video/*,image/*"
-            onChange={(e) => setFiles(e.target.files)}
           />
         </div>
 
