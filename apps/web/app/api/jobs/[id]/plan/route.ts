@@ -3,6 +3,7 @@ import { listTemplates } from "@marketron/core";
 import { ClaudePlanner } from "@marketron/planner";
 import { db } from "@/lib/db";
 import { storage } from "@/lib/storage";
+import { getJobAssets } from "@/lib/assets";
 import { serializeEditPlan } from "@/lib/serialize";
 
 export async function POST(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -12,7 +13,7 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
     return NextResponse.json({ error: "Job not found" }, { status: 404 });
   }
 
-  const assets = await db.asset.findMany({ where: { jobId } });
+  const assets = await getJobAssets(jobId);
   if (assets.length === 0) {
     return NextResponse.json({ error: "Job has no uploaded assets yet." }, { status: 400 });
   }
@@ -32,7 +33,6 @@ export async function POST(_request: NextRequest, { params }: { params: Promise<
       assets: assets.map((asset) => ({
         asset: {
           id: asset.id,
-          jobId: asset.jobId,
           kind: asset.kind as "video" | "photo",
           filePath: asset.filePath,
           originalName: asset.originalName,

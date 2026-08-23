@@ -1,11 +1,15 @@
-import { randomUUID } from "node:crypto";
-import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
-import { probeMedia } from "@marketron/core";
 import { db } from "@/lib/db";
-import { storage } from "@/lib/storage";
+import { linkAssetsToJob, saveUploadedFilesToLibrary } from "@/lib/assets";
 import { serializeAsset } from "@/lib/serialize";
 
+/**
+ * Uploads new files AND attaches them to this job in one call. The files
+ * land in the shared library first (see lib/assets.ts) — they aren't
+ * job-exclusive, so they can be reused on a future job without
+ * re-uploading. To attach existing library assets instead of uploading new
+ * ones, see POST /api/jobs/[id]/assets/link.
+ */
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id: jobId } = await params;
   const job = await db.job.findUnique({ where: { id: jobId } });
@@ -22,53 +26,22 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     );
   }
 
-  const created = [];
-  for (const file of files) {
-    const kind = file.type.startsWith("video/") ? "video" : file.type.startsWith("image/") ? "photo" : null;
-    if (!kind) continue; // unsupported file type — skip rather than fail the whole batch
-
-    const assetId = randomUUID();
-    const ext = path.extname(file.name) || (kind === "video" ? ".mp4" : ".jpg");
-    const relativePath = `uploads/${jobId}/${assetId}${ext}`;
-    const buffer = Buffer.from(await file.arrayBuffer());
-    await storage.save(relativePath, buffer);
-
-    let durationSec: number | undefined;
-    let width: number | undefined;
-    let height: number | undefined;
-    if (kind === "video") {
-      const probe = await probeMedia(storage.absolutePath(relativePath));
-      durationSec = probe.durationSec;
-      width = probe.width;
-      height = probe.height;
-    }
-
-    const asset = await db.asset.create({
-      data: {
-        id: assetId,
-        jobId,
-        kind,
-        filePath: relativePath,
-        originalName: file.name,
-        mimeType: file.type,
-        durationSec,
-        width,
-        height,
-      },
-    });
-    created.push(serializeAsset(asset));
-  }
-
-  if (created.length === 0) {
+  const createdAssets = await saveUploadedFilesToLibrary(files);
+  if (createdAssets.length === 0) {
     return NextResponse.json(
       { error: "None of the uploaded files were a recognized video/* or image/* type." },
       { status: 400 },
     );
   }
 
+  await linkAssetsToJob(
+    jobId,
+    createdAssets.map((a) => a.id),
+  );
+
   if (job.status === "draft") {
     await db.job.update({ where: { id: jobId }, data: { status: "uploading" } });
   }
 
-  return NextResponse.json({ assets: created }, { status: 201 });
+  return NextResponse.json({ assets: createdAssets.map(serializeAsset) }, { status: 201 });
 }

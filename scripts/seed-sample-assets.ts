@@ -97,25 +97,40 @@ async function main() {
   const tmpDir = `/tmp/marketron-seed-${randomUUID()}`;
   await fs.mkdir(tmpDir, { recursive: true });
 
-  const hookTmp = `${tmpDir}/hook.mp4`;
-  const beforeTmp = `${tmpDir}/before.jpg`;
-  const afterTmp = `${tmpDir}/after.jpg`;
+  // Enough material for a real ~20-40s edit, not just a 3-asset toy example:
+  // 3 clips + 2 before/after pairs.
+  const clip1Tmp = `${tmpDir}/clip1.mp4`;
+  const clip2Tmp = `${tmpDir}/clip2.mp4`;
+  const clip3Tmp = `${tmpDir}/clip3.mp4`;
+  const before1Tmp = `${tmpDir}/before1.jpg`;
+  const after1Tmp = `${tmpDir}/after1.jpg`;
+  const before2Tmp = `${tmpDir}/before2.jpg`;
+  const after2Tmp = `${tmpDir}/after2.jpg`;
   await Promise.all([
-    makeVideo(hookTmp),
-    makePhoto(beforeTmp, "0x8a6d3b", "BEFORE"),
-    makePhoto(afterTmp, "0x3ba86d", "AFTER"),
+    makeVideo(clip1Tmp),
+    makeVideo(clip2Tmp),
+    makeVideo(clip3Tmp),
+    makePhoto(before1Tmp, "0x8a6d3b", "BEFORE 1"),
+    makePhoto(after1Tmp, "0x3ba86d", "AFTER 1"),
+    makePhoto(before2Tmp, "0x6d3b8a", "BEFORE 2"),
+    makePhoto(after2Tmp, "0x3b8a6d", "AFTER 2"),
   ]);
 
   const files: { tmpPath: string; kind: "video" | "photo"; originalName: string; mimeType: string }[] = [
-    { tmpPath: hookTmp, kind: "video", originalName: "job-site-walkthrough.mp4", mimeType: "video/mp4" },
-    { tmpPath: beforeTmp, kind: "photo", originalName: "patio-before.jpg", mimeType: "image/jpeg" },
-    { tmpPath: afterTmp, kind: "photo", originalName: "patio-after.jpg", mimeType: "image/jpeg" },
+    { tmpPath: clip1Tmp, kind: "video", originalName: "job-site-walkthrough-1.mp4", mimeType: "video/mp4" },
+    { tmpPath: clip2Tmp, kind: "video", originalName: "job-site-walkthrough-2.mp4", mimeType: "video/mp4" },
+    { tmpPath: clip3Tmp, kind: "video", originalName: "job-site-walkthrough-3.mp4", mimeType: "video/mp4" },
+    { tmpPath: before1Tmp, kind: "photo", originalName: "patio-before-1.jpg", mimeType: "image/jpeg" },
+    { tmpPath: after1Tmp, kind: "photo", originalName: "patio-after-1.jpg", mimeType: "image/jpeg" },
+    { tmpPath: before2Tmp, kind: "photo", originalName: "patio-before-2.jpg", mimeType: "image/jpeg" },
+    { tmpPath: after2Tmp, kind: "photo", originalName: "patio-after-2.jpg", mimeType: "image/jpeg" },
   ];
 
+  const assetIds: string[] = [];
   for (const file of files) {
     const assetId = randomUUID();
     const ext = file.kind === "video" ? ".mp4" : ".jpg";
-    const relativePath = `uploads/${job.id}/${assetId}${ext}`;
+    const relativePath = `uploads/${assetId}${ext}`;
     await storage.save(relativePath, await fs.readFile(file.tmpPath));
 
     let durationSec: number | undefined;
@@ -131,7 +146,6 @@ async function main() {
     await db.asset.create({
       data: {
         id: assetId,
-        jobId: job.id,
         kind: file.kind,
         filePath: relativePath,
         originalName: file.originalName,
@@ -141,8 +155,11 @@ async function main() {
         height,
       },
     });
-    console.log(`  + ${file.kind} asset ${assetId} (${file.originalName})`);
+    assetIds.push(assetId);
+    console.log(`  + ${file.kind} asset ${assetId} (${file.originalName}) added to the library`);
   }
+
+  await db.jobAsset.createMany({ data: assetIds.map((assetId) => ({ jobId: job.id, assetId })) });
 
   await fs.rm(tmpDir, { recursive: true, force: true });
 

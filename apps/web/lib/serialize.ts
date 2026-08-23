@@ -13,7 +13,6 @@ export function serializeJob(job: Job) {
 export function serializeAsset(asset: Asset) {
   return {
     id: asset.id,
-    jobId: asset.jobId,
     kind: asset.kind as "video" | "photo",
     filePath: asset.filePath,
     originalName: asset.originalName,

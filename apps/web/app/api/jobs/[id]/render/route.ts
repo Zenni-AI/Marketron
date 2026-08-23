@@ -5,6 +5,7 @@ import { renderEditPlan, type AssetForRender } from "@marketron/renderer";
 import { db } from "@/lib/db";
 import { storage } from "@/lib/storage";
 import { getBrandLogoAbsolutePath } from "@/lib/branding";
+import { getJobAssets } from "@/lib/assets";
 import { serializeRender } from "@/lib/serialize";
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     return NextResponse.json({ error: `Unknown template "${editPlan.templateId}".` }, { status: 500 });
   }
 
-  const assets = await db.asset.findMany({ where: { jobId } });
+  const assets = await getJobAssets(jobId);
   const assetsForRender: AssetForRender[] = assets.map((asset) => ({
     assetId: asset.id,
     kind: asset.kind as "video" | "photo",

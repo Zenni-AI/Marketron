@@ -13,15 +13,17 @@ model Job {
   status    String   @default("draft")
   createdAt DateTime @default(now())
 
-  assets    Asset[]
+  jobAssets JobAsset[]
   editPlans EditPlan[]
   renders   Render[]
 }
 
+/// A single uploaded video or photo, living in the shared library — not
+/// owned by any one job. Jobs pull assets in (old or newly uploaded) via
+/// JobAsset, so the same clip/photo can be reused across multiple jobs
+/// without re-uploading.
 model Asset {
   id           String   @id @default(cuid())
-  jobId        String
-  job          Job      @relation(fields: [jobId], references: [id])
   kind         String
   filePath     String
   originalName String
@@ -32,7 +34,21 @@ model Asset {
   analysisHash String?
   createdAt    DateTime @default(now())
 
+  jobAssets JobAsset[]
+}
+
+/// Join table: which library assets a given job is currently using.
+model JobAsset {
+  id      String   @id @default(cuid())
+  jobId   String
+  job     Job      @relation(fields: [jobId], references: [id])
+  assetId String
+  asset   Asset    @relation(fields: [assetId], references: [id])
+  addedAt DateTime @default(now())
+
+  @@unique([jobId, assetId])
   @@index([jobId])
+  @@index([assetId])
 }
 
 model EditPlan {
