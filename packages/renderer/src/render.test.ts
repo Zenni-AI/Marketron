@@ -68,6 +68,8 @@ describe("renderEditPlan", () => {
     await makeSyntheticVideo(path.join(storageRoot, "hook.mp4"));
     await makeSyntheticPhoto(path.join(storageRoot, "before.jpg"), "red");
     await makeSyntheticPhoto(path.join(storageRoot, "after.jpg"), "green");
+    await makeSyntheticPhoto(path.join(storageRoot, "detail.jpg"), "yellow");
+    await makeSyntheticPhoto(path.join(storageRoot, "closer.jpg"), "purple");
     await makeSyntheticPhoto(path.join(storageRoot, "logo.png"), "blue");
   }, 60_000);
 
@@ -77,16 +79,28 @@ describe("renderEditPlan", () => {
   });
 
   it("renders a fixture edit plan to all 3 formats at the correct dimensions", async () => {
+    // A somewhat richer fixture than the bare minimum: several photo clips
+    // (each should get its own Ken-Burns pan/zoom variant, see
+    // EditPlanComposition's KEN_BURNS_VARIANTS) chained with the template's
+    // default "slide" transition (see registry.ts), plus captions spread
+    // across the whole runtime rather than clustered at the start — this
+    // exercises the same code paths a real, longer plan would.
     const editPlan: EditPlan = {
       jobId: "job_fixture",
       templateId: beforeAfterHookTemplate.id,
       clips: [
         { assetId: "hook", order: 0, inSec: 0, outSec: 1.5, role: "hook" },
-        { assetId: "before", order: 1, inSec: 0, outSec: 1, role: "before" },
-        { assetId: "after", order: 2, inSec: 0, outSec: 1, role: "after" },
+        { assetId: "before", order: 1, inSec: 0, outSec: 1.5, role: "before" },
+        { assetId: "after", order: 2, inSec: 0, outSec: 1.5, role: "after" },
+        { assetId: "detail", order: 3, inSec: 0, outSec: 1.5, role: "body" },
+        { assetId: "closer", order: 4, inSec: 0, outSec: 1.5, role: "body" },
       ],
-      captions: [{ text: "Before -> After", startSec: 1.5, endSec: 3 }],
-      totalDurationSec: 3.5,
+      captions: [
+        { text: "Before -> After", startSec: 1.5, endSec: 3 },
+        { text: "Every detail matters", startSec: 4.5, endSec: 6 },
+        { text: "Book your job today", startSec: 6, endSec: 7.5 },
+      ],
+      totalDurationSec: 7.5,
       rationale: "Fixture plan for automated renderer verification.",
     };
 
@@ -94,6 +108,8 @@ describe("renderEditPlan", () => {
       { assetId: "hook", kind: "video", relativePath: "hook.mp4" },
       { assetId: "before", kind: "photo", relativePath: "before.jpg" },
       { assetId: "after", kind: "photo", relativePath: "after.jpg" },
+      { assetId: "detail", kind: "photo", relativePath: "detail.jpg" },
+      { assetId: "closer", kind: "photo", relativePath: "closer.jpg" },
     ];
 
     const results = await renderEditPlan({
