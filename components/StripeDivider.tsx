@@ -33,10 +33,15 @@ export default function StripeDivider({
     { d: "M-40 96 C 300 84, 760 52, 1240 26", color: "#B31942", width: 15 },
     {
       d: "M-40 66 C 300 54, 760 24, 1240 -2",
-      color: tone === "dark" ? "#FFFFFF" : "#FFFFFF",
+      color: "#FFFFFF",
       width: 12,
     },
-    { d: "M-40 38 C 300 26, 760 -4, 1240 -30", color: "#14396B", width: 10 },
+    {
+      d: "M-40 38 C 300 26, 760 -4, 1240 -30",
+      // On navy panels the mid blue disappears — lift it just enough to read.
+      color: tone === "dark" ? "#3D6FB8" : "#14396B",
+      width: 10,
+    },
   ];
 
   // A hairline under the white stroke so it still reads on light backgrounds.
