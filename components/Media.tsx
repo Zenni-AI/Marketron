@@ -89,13 +89,14 @@ export default function Media({
         aspect ?? ""
       } ${className}`}
     >
-      {parallax && !prefersReduced ? (
-        <motion.div style={{ y }} className="absolute inset-[-6%]">
-          {inner}
-        </motion.div>
-      ) : (
-        <div className="absolute inset-0">{inner}</div>
-      )}
+      {/* One stable element either way — swapping motion for plain would leave
+          framer's inline transform behind when the preference resolves. */}
+      <motion.div
+        style={{ y: prefersReduced ? 0 : y }}
+        className={parallax ? "absolute inset-[-6%]" : "absolute inset-0"}
+      >
+        {inner}
+      </motion.div>
 
       {scrim !== "none" && (
         <div

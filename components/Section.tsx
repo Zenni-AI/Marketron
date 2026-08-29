@@ -25,8 +25,14 @@ const toneClasses = {
 } as const;
 
 /**
- * Scroll-reveal wrapper: fade + slide up, staggered header, and a no-op
- * under prefers-reduced-motion (content renders at rest, immediately).
+ * Scroll-reveal wrapper: fade + slide up, respecting prefers-reduced-motion.
+ *
+ * The shape matters. `useReducedMotion` resolves AFTER hydration, so the first
+ * render always applies the animated `initial` (opacity 0). Swapping the
+ * motion element for a plain one on the second render does NOT clear that —
+ * React reuses the same DOM node and framer's inline style stays, leaving the
+ * content permanently invisible. So: always render the motion element, always
+ * define the rest target, and express the preference as a zero duration.
  */
 export function Reveal({
   children,
@@ -41,15 +47,17 @@ export function Reveal({
 }) {
   const prefersReduced = useReducedMotion();
 
-  if (prefersReduced) return <div className={className}>{children}</div>;
-
   return (
     <motion.div
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay }}
+      transition={
+        prefersReduced
+          ? { duration: 0 }
+          : { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay }
+      }
     >
       {children}
     </motion.div>

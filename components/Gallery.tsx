@@ -34,10 +34,14 @@ export default function Gallery() {
         {frames.map((frame, i) => (
           <motion.figure
             key={frame.slot}
-            initial={prefersReduced ? false : { opacity: 0, y: 28 }}
-            whileInView={prefersReduced ? undefined : { opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: EASE, delay: i * 0.08 }}
+            transition={
+              prefersReduced
+                ? { duration: 0 }
+                : { duration: 0.7, ease: EASE, delay: i * 0.08 }
+            }
             className={`group w-[72vw] shrink-0 snap-start sm:w-[46vw] md:w-auto ${
               i % 2 === 1 ? "lg:mt-12" : ""
             }`}

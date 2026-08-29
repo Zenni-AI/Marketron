@@ -56,10 +56,14 @@ export default function Services() {
         {services.map((service, i) => (
           <motion.article
             key={service.title}
-            initial={prefersReduced ? false : { opacity: 0, y: 30 }}
-            whileInView={prefersReduced ? undefined : { opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.75, ease: EASE, delay: i * 0.12 }}
+            transition={
+              prefersReduced
+                ? { duration: 0 }
+                : { duration: 0.75, ease: EASE, delay: i * 0.12 }
+            }
             className="group relative flex flex-col overflow-hidden rounded-card border border-line bg-white shadow-card transition-all duration-250 ease-premium hover:-translate-y-1.5 hover:shadow-card-hover"
           >
             <div className="relative overflow-hidden">

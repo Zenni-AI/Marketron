@@ -98,7 +98,7 @@ export default function Hero() {
           variants={container}
           initial="hidden"
           animate="visible"
-          className="max-w-xl lg:max-w-2xl"
+          className="max-w-xl"
         >
           <motion.div variants={item} className="mb-7 flex items-center gap-4">
             <span className="h-[3px] w-10 bg-red" />
@@ -172,10 +172,14 @@ export default function Hero() {
 
       {/* Second frame, overlapping the seam between field and picture. */}
       <motion.div
-        initial={prefersReduced ? false : { opacity: 0, y: 28 }}
-        animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, delay: 0.5, ease: EASE }}
-        className="absolute bottom-[21%] left-[47%] z-20 hidden w-[18%] lg:block"
+        initial={{ opacity: 0, y: 28 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={
+          prefersReduced
+            ? { duration: 0 }
+            : { duration: 0.9, delay: 0.5, ease: EASE }
+        }
+        className="absolute bottom-[18%] left-[52%] z-20 hidden w-[18%] lg:block"
       >
         <Media
           slot="heroInset"
@@ -223,9 +227,11 @@ function BrushUnderline() {
         strokeLinecap="round"
         fill="none"
         opacity="0.85"
-        initial={prefersReduced ? false : { pathLength: 0 }}
-        animate={prefersReduced ? undefined : { pathLength: 1 }}
-        transition={{ duration: 1.1, delay: 0.9, ease: EASE }}
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={
+          prefersReduced ? { duration: 0 } : { duration: 1.1, delay: 0.9, ease: EASE }
+        }
       />
     </svg>
   );
