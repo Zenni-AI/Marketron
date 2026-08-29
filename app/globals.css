@@ -2,26 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Keep anchored sections clear of the sticky header. */
+    scroll-padding-top: 88px;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    @apply bg-offWhite text-steel font-sans antialiased;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-blueDeep;
+  }
+
+  ::selection {
+    background-color: #b31942;
+    color: #ffffff;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-red {
+    @apply inline-flex items-center justify-center rounded-md bg-red px-6 py-3 font-sans text-sm font-bold uppercase tracking-[0.08em] text-white shadow-[0_10px_24px_-12px_rgba(179,25,66,0.9)] transition-all duration-200 ease-premium hover:-translate-y-0.5 hover:bg-redDeep hover:shadow-[0_16px_32px_-14px_rgba(140,19,50,0.95)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red focus-visible:ring-offset-2 active:translate-y-0;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/30 px-6 py-3 font-sans text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-200 ease-premium hover:border-white/70 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-blueDeep;
+  }
+
+  .eyebrow {
+    @apply font-sans text-eyebrow font-bold uppercase;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .hairline {
+    @apply border-line;
+  }
+}
+
+/* Motion is a garnish, never the mechanism: everything below still renders. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
