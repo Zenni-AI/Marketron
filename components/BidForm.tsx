@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { BID_FORM_ID, scrollToId } from "@/lib/scroll";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -46,6 +47,8 @@ export default function BidForm() {
 
       setStatus("success");
       form.reset();
+      // The card shrinks around the confirmation — re-anchor the section.
+      scrollToId(BID_FORM_ID);
     } catch (error) {
       setStatus("error");
       setErrorMessage(

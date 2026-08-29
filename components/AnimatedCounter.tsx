@@ -46,12 +46,15 @@ export default function AnimatedCounter({
 
   useEffect(() => {
     if (!isNumeric) return;
-    if (!inView) return;
 
+    // Reduced motion: land on the final figure without waiting for the
+    // viewport, so the number is never left sitting at zero.
     if (prefersReduced) {
       setDisplay(value);
       return;
     }
+
+    if (!inView) return;
 
     const start = performance.now();
     const tick = (now: number) => {
@@ -71,10 +74,10 @@ export default function AnimatedCounter({
 
   return (
     <div ref={ref} className={className}>
+      {/* The figure is always painted — the count-up is the reveal. Gating
+          visibility on the observer risks leaving it invisible. */}
       <div
-        className={`font-display font-normal leading-none ${sizeClasses[size]} ${figureColor} transition-opacity duration-500 ${
-          inView || prefersReduced ? "opacity-100" : "opacity-0"
-        }`}
+        className={`font-display font-normal leading-none ${sizeClasses[size]} ${figureColor}`}
       >
         {display}
         {suffix && <span className="text-red">{suffix}</span>}

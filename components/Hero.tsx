@@ -40,8 +40,14 @@ export default function Hero() {
     visible: { transition: { staggerChildren: 0.11, delayChildren: 0.15 } },
   };
 
+  // Reduced motion resolves after hydration, so the "reduced" variants must
+  // state the rest position explicitly — empty variants would strand elements
+  // at the hidden values applied on the first render.
   const item = prefersReduced
-    ? { hidden: {}, visible: {} }
+    ? {
+        hidden: { opacity: 1, y: 0 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0 } },
+      }
     : {
         hidden: { opacity: 0, y: 22 },
         visible: {

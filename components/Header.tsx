@@ -46,7 +46,7 @@ export default function Header() {
             JVS
           </span>
           <span
-            className={`font-display text-lg tracking-tight transition-colors duration-250 sm:text-xl ${
+            className={`hidden whitespace-nowrap font-display text-lg tracking-tight transition-colors duration-250 min-[380px]:inline sm:text-xl ${
               scrolled ? "text-blueDeep" : "text-white"
             }`}
           >
@@ -82,7 +82,7 @@ export default function Header() {
           <button
             type="button"
             onClick={() => scrollToId(BID_FORM_ID)}
-            className="btn-red px-4 py-2.5 text-[11px] sm:px-6 sm:py-3 sm:text-sm"
+            className="btn-red whitespace-nowrap px-4 py-2.5 text-[11px] sm:px-6 sm:py-3 sm:text-sm"
           >
             <span className="hidden sm:inline">Submit a Bid Request</span>
             <span className="sm:hidden">Bid Request</span>

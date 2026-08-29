@@ -53,7 +53,10 @@ export default function CaseStudy() {
             <Reveal delay={0.24}>
               <dl className="mt-11 grid grid-cols-1 gap-px overflow-hidden rounded-card border border-white/12 bg-white/12 sm:grid-cols-3">
                 {facts.map((fact) => (
-                  <div key={fact.label} className="bg-blueDeep px-6 py-5">
+                  <div
+                    key={fact.label}
+                    className="bg-blueDeep px-6 py-5 transition-colors duration-250 ease-premium hover:bg-blueMid"
+                  >
                     <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
                       {fact.label}
                     </dt>
@@ -73,7 +76,9 @@ export default function CaseStudy() {
             transition={{ duration: 0.8, ease: EASE, delay: 0.12 }}
             className="relative"
           >
-            {/* Photo placeholder — swap for a real project photograph. */}
+            {/* Photo placeholder. Swap in <Image src="/…" alt="…" fill sizes="(max-width:1024px) 100vw, 50vw" />
+                from next/image — it lazy-loads by default and the fixed 4:3 box
+                below already reserves the space, so no layout shift on load. */}
             <div className="relative aspect-[4/3] overflow-hidden rounded-card border border-white/12 bg-[linear-gradient(150deg,#14396B_0%,#0A2647_100%)] shadow-elevated">
               <div
                 aria-hidden="true"

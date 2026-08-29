@@ -64,15 +64,13 @@ export default function StripeDivider({
   };
 
   const shouldDraw = animate && !prefersReduced;
-  const motionProps = shouldDraw
-    ? animateOnMount
-      ? { initial: "hidden" as const, animate: "visible" as const }
-      : {
-          initial: "hidden" as const,
-          whileInView: "visible" as const,
-          viewport: { once: true, amount: 0.4 },
-        }
-    : { initial: false as const };
+  const motionProps = animateOnMount
+    ? { initial: "hidden" as const, animate: "visible" as const }
+    : {
+        initial: "hidden" as const,
+        whileInView: "visible" as const,
+        viewport: { once: true, amount: 0.4 },
+      };
 
   return (
     <div
@@ -98,16 +96,27 @@ export default function StripeDivider({
                 opacity={0.9}
               />
             )}
-            <motion.path
-              d={stroke.d}
-              stroke={stroke.color}
-              strokeWidth={stroke.width}
-              strokeLinecap="round"
-              fill="none"
-              custom={i}
-              variants={draw}
-              {...motionProps}
-            />
+            {shouldDraw ? (
+              <motion.path
+                d={stroke.d}
+                stroke={stroke.color}
+                strokeWidth={stroke.width}
+                strokeLinecap="round"
+                fill="none"
+                custom={i}
+                variants={draw}
+                {...motionProps}
+              />
+            ) : (
+              /* No draw-on: the strokes simply exist, fully painted. */
+              <path
+                d={stroke.d}
+                stroke={stroke.color}
+                strokeWidth={stroke.width}
+                strokeLinecap="round"
+                fill="none"
+              />
+            )}
           </g>
         ))}
       </svg>

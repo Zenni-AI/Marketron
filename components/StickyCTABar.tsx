@@ -48,7 +48,7 @@ export default function StickyCTABar() {
           animate={prefersReduced ? { opacity: 1 } : { y: 0, opacity: 1 }}
           exit={prefersReduced ? { opacity: 0 } : { y: "100%", opacity: 0 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-blueDeep/95 backdrop-blur"
+          className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-blueDeep/95 pb-[env(safe-area-inset-bottom)] backdrop-blur"
         >
           <div className="mx-auto flex w-full max-w-content items-center justify-between gap-4 px-5 py-3.5 sm:px-8 lg:px-10">
             <div className="flex min-w-0 items-center gap-3">
@@ -63,7 +63,7 @@ export default function StickyCTABar() {
             <button
               type="button"
               onClick={() => scrollToId(BID_FORM_ID)}
-              className="btn-red shrink-0 px-4 py-2.5 text-[11px] sm:px-6 sm:text-sm"
+              className="btn-red shrink-0 whitespace-nowrap px-4 py-2.5 text-[11px] sm:px-6 sm:text-sm"
             >
               <span className="hidden sm:inline">Submit a Bid Request</span>
               <span className="sm:hidden">Get Started</span>
