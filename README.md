@@ -28,6 +28,36 @@ Other scripts: `npm run build`, `npm run start`, `npm run lint`.
 Never commit real keys — `.env*` is gitignored; `.env.example` is the only
 env file in version control.
 
+## Photography
+
+Every image slot on the page is declared once in `lib/media.ts`. Until real
+photographs exist, each slot renders a hand-drawn artwork plate from
+`components/art/Plates.tsx` — original screen-print style illustrations of the
+work (scaffolded facade, hangar, warehouse, boom lift, crew, water tower,
+structural steel, finish detail), not stock imagery.
+
+To use a real photograph, drop the file in `public/work/` and set `src` on that
+slot:
+
+```ts
+caseMain: {
+  id: "caseMain",
+  plate: "hangar",
+  src: "/work/hangar-exterior.jpg",   // <- add this
+  alt: "Crew coating a hangar door at a New Jersey installation",
+  ...
+}
+```
+
+Nothing else changes: `components/Media.tsx` swaps the plate for a lazy-loaded
+`next/image` in the same frame, at the same aspect ratio. Every slot carries a
+`note` describing what to shoot and in what shape — shoot to those and the
+layout holds.
+
+The plates are drawn on a 240x120 canvas and cropped with `slice`, so the
+subject of each sits in the centre band (x 72-168) with supporting structure
+running to the edges. Keep that rule if you add one.
+
 ## Structure
 
 ```
@@ -65,6 +95,6 @@ nearest to New Jersey).
 
 - Replace the `bids@jvspainting.com` placeholder inbox (`BID_INBOX`).
 - Verify `jvspainting.com` in Resend and set `BID_FROM` to an address on it.
-- Swap the case study photo placeholder in `components/CaseStudy.tsx` for real
-  project photography.
+- Replace the artwork plates with real project photography — see
+  **Photography** above. This is the single biggest visual upgrade available.
 - Replace the placeholder JVS favicon marks with the real logo.

@@ -1,10 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import Media from "./Media";
+import Texture from "./Texture";
 import StripeDivider from "./StripeDivider";
 import { Reveal } from "./Section";
-
-const EASE = [0.22, 1, 0.36, 1] as const;
 
 const facts = [
   { label: "Client Type", value: "Military Installation" },
@@ -13,20 +12,46 @@ const facts = [
 ];
 
 export default function CaseStudy() {
-  const prefersReduced = useReducedMotion();
-
   return (
-    <section id="work" className="relative overflow-hidden bg-hero-gradient">
-      <StripeDivider
-        tone="dark"
-        className="h-16 w-full opacity-80 md:h-24"
-      />
+    <section id="project" className="relative overflow-hidden bg-blueDeep">
+      <StripeDivider tone="dark" className="h-14 w-full opacity-80 md:h-20" />
+      <Texture opacity={0.26} />
 
-      <div className="mx-auto w-full max-w-content px-5 py-16 sm:px-8 md:py-24 lg:px-10">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-          <div>
+      <div className="relative mx-auto w-full max-w-content px-5 py-16 sm:px-8 md:py-24 lg:px-10">
+        <div className="grid gap-14 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-20">
+          {/* Three-frame collage — a big plate with two overlapping insets. */}
+          <div className="relative">
+            <Media
+              slot="caseMain"
+              aspect="aspect-[4/3]"
+              showLabel
+              parallax
+              className="shadow-elevated ring-1 ring-white/12"
+              sizes="(max-width: 1024px) 100vw, 45vw"
+            />
+
+            <Media
+              slot="caseDetail"
+              aspect="aspect-[3/4]"
+              showLabel
+              className="absolute -bottom-10 -right-3 w-[38%] shadow-elevated ring-1 ring-white/15 sm:-right-8 sm:w-[34%]"
+              sizes="25vw"
+            />
+
+            <Media
+              slot="caseFinish"
+              aspect="aspect-square"
+              className="absolute -left-3 -top-10 hidden w-[26%] shadow-elevated ring-1 ring-white/20 sm:block"
+              sizes="20vw"
+            />
+          </div>
+
+          <div className="pt-14 lg:pt-0">
             <Reveal>
-              <p className="eyebrow mb-5 text-white/55">Featured Project</p>
+              <div className="mb-5 flex items-center gap-4">
+                <span className="h-[3px] w-10 bg-red" />
+                <p className="eyebrow text-white/60">Featured Project</p>
+              </div>
             </Reveal>
             <Reveal delay={0.08}>
               <h2 className="text-display-sm text-balance text-white md:text-display-md">
@@ -34,14 +59,14 @@ export default function CaseStudy() {
               </h2>
             </Reveal>
             <Reveal delay={0.16}>
-              <div className="mt-7 space-y-5 text-base leading-[1.8] text-white/70 md:text-lg">
+              <div className="mt-7 space-y-6 text-base leading-[1.8] text-white/70 md:text-lg">
                 <p>
                   Commercial-grade painting services delivered for one of New
                   Jersey&rsquo;s major military installations — one example of
                   the caliber of work JVS Painting has provided for over four
                   decades.
                 </p>
-                <p>
+                <p className="border-l-2 border-red pl-5 font-display text-xl leading-[1.6] text-white md:text-2xl">
                   Work of this scale requires more than a paint crew: it takes a
                   contractor who understands security protocols, scheduling
                   constraints, and the standard of finish a government facility
@@ -68,56 +93,12 @@ export default function CaseStudy() {
               </dl>
             </Reveal>
           </div>
-
-          <motion.div
-            initial={prefersReduced ? false : { opacity: 0, y: 32 }}
-            whileInView={prefersReduced ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.12 }}
-            className="relative"
-          >
-            {/* Photo placeholder. Swap in <Image src="/…" alt="…" fill sizes="(max-width:1024px) 100vw, 50vw" />
-                from next/image — it lazy-loads by default and the fixed 4:3 box
-                below already reserves the space, so no layout shift on load. */}
-            <div className="relative aspect-[4/3] overflow-hidden rounded-card border border-white/12 bg-[linear-gradient(150deg,#14396B_0%,#0A2647_100%)] shadow-elevated">
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.10),transparent_60%)]"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center">
-                <span className="flex h-14 w-14 items-center justify-center rounded-full border border-white/25 text-white/70">
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                    <circle cx="8.5" cy="8.5" r="1.5" />
-                    <path d="m21 15-5-5L5 21" />
-                  </svg>
-                </span>
-                <p className="font-sans text-[11px] font-bold uppercase tracking-[0.16em] text-white/45">
-                  Project Photography
-                </p>
-              </div>
-              <span
-                aria-hidden="true"
-                className="absolute bottom-0 left-0 h-1.5 w-2/3 bg-red"
-              />
-            </div>
-          </motion.div>
         </div>
       </div>
 
       <StripeDivider
         tone="dark"
-        className="h-16 w-full rotate-180 opacity-80 md:h-24"
+        className="h-14 w-full rotate-180 opacity-80 md:h-20"
       />
     </section>
   );

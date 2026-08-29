@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import AnimatedCounter from "./AnimatedCounter";
-import StripeDivider from "./StripeDivider";
+import Media from "./Media";
+import Texture from "./Texture";
 import { BID_FORM_ID, scrollToId } from "@/lib/scroll";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -15,6 +16,11 @@ const stats = [
   { value: "NJ", label: "Based in New Jersey" },
 ];
 
+/**
+ * Editorial split: type holds a solid navy field on the left, the picture
+ * takes the right and bleeds off the edge, and a second frame overlaps the
+ * seam between them.
+ */
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const prefersReduced = useReducedMotion();
@@ -24,98 +30,98 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
 
-  // Parallax: content drifts up and fades, the stripe trails behind it.
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
-  // The sweep sinks slightly (clipped by the hero) rather than lifting off its
-  // bottom edge, so no gap opens between the hero and the section below.
-  const stripeY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const glowY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const panelY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "24%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
 
   const parallax = (style: Record<string, unknown>) =>
     prefersReduced ? undefined : style;
 
   const container = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.11, delayChildren: 0.15 } },
+    visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
   };
 
-  // Reduced motion resolves after hydration, so the "reduced" variants must
-  // state the rest position explicitly — empty variants would strand elements
-  // at the hidden values applied on the first render.
+  // Reduced motion resolves after hydration, so the reduced variants must
+  // state the rest position explicitly rather than being empty.
   const item = prefersReduced
     ? {
         hidden: { opacity: 1, y: 0 },
         visible: { opacity: 1, y: 0, transition: { duration: 0 } },
       }
     : {
-        hidden: { opacity: 0, y: 22 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.75, ease: EASE },
-        },
+        hidden: { opacity: 0, y: 24 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
       };
 
   return (
     <section
       ref={ref}
       id="top"
-      className="relative flex min-h-[100svh] w-full items-center overflow-hidden bg-hero-gradient pb-28 pt-24 sm:pb-32 md:pt-32"
+      className="relative w-full overflow-hidden bg-hero-gradient pt-24 md:pt-0"
     >
-      {/* Depth: an off-center light bloom behind the headline. */}
-      <motion.div
-        aria-hidden="true"
-        style={parallax({ y: glowY })}
-        className="pointer-events-none absolute -right-[20%] top-[-10%] h-[70vh] w-[70vw] rounded-full bg-blueMid opacity-50 blur-[120px]"
-      />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,rgba(255,255,255,0.08),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_10%_0%,rgba(255,255,255,0.10),transparent_55%)]"
       />
 
-      {/* Signature motif — draws on at load, sweeping out of the hero's base. */}
+      {/* The picture: right half from md up, bleeding off the edge. */}
       <motion.div
-        style={parallax({ y: stripeY })}
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-20 md:h-28"
+        style={parallax({ y: panelY })}
+        className="absolute inset-y-0 right-0 hidden w-[48%] md:block lg:w-[52%]"
       >
-        <StripeDivider
-          tone="dark"
-          animateOnMount
-          delay={0.55}
+        <Media
+          slot="heroBackdrop"
+          rounded={false}
+          priority
+          sizes="55vw"
           className="h-full w-full"
+        />
+        {/* Feather the picture into the navy field instead of butting it. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[linear-gradient(90deg,#0A2647_0%,rgba(10,38,71,0.85)_18%,rgba(10,38,71,0.12)_52%,transparent_100%)]"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(0deg,#0A2647,transparent)]"
         />
       </motion.div>
 
+      <Texture opacity={0.26} />
+
       <motion.div
         style={parallax({ y: contentY, opacity: contentOpacity })}
-        className="relative z-10 mx-auto w-full max-w-content px-5 sm:px-8 lg:px-10"
+        className="relative z-10 mx-auto flex w-full max-w-content flex-col justify-center px-5 sm:px-8 md:min-h-[100svh] md:pb-32 md:pt-36 lg:px-10"
       >
         <motion.div
           variants={container}
           initial="hidden"
           animate="visible"
-          className="max-w-4xl"
+          className="max-w-xl lg:max-w-2xl"
         >
-          <motion.p
-            variants={item}
-            className="eyebrow mb-7 text-white/55"
-          >
-            Commercial &amp; Government Painting Contractors
-          </motion.p>
+          <motion.div variants={item} className="mb-7 flex items-center gap-4">
+            <span className="h-[3px] w-10 bg-red" />
+            <p className="eyebrow text-white/70">
+              Commercial &amp; Government Painting Contractors
+            </p>
+          </motion.div>
 
           <motion.h1
             variants={item}
-            className="text-display-sm text-balance text-white sm:text-display-md lg:text-display-lg xl:text-display-xl"
+            className="text-display-sm text-balance text-white sm:text-display-md lg:text-display-lg"
           >
             40+ Years of Painting Trusted by{" "}
-            <span className="text-red">Government &amp; Commercial</span>{" "}
+            <span className="relative inline-block text-red">
+              Government &amp; Commercial
+              <BrushUnderline />
+            </span>{" "}
             Clients
           </motion.h1>
 
           <motion.p
             variants={item}
-            className="mt-7 max-w-2xl text-base leading-[1.75] text-white/70 sm:text-lg md:text-xl md:leading-[1.7]"
+            className="mt-8 max-w-lg text-base leading-[1.75] text-white/75 sm:text-lg"
           >
             From military installations to major commercial facilities, JVS
             Painting has delivered dependable, code-compliant work across New
@@ -151,24 +157,76 @@ export default function Hero() {
               </svg>
             </a>
           </motion.div>
+        </motion.div>
 
-          <motion.div
-            variants={item}
-            className="mt-10 grid grid-cols-2 gap-x-6 gap-y-7 border-t border-white/15 pt-8 sm:mt-14 sm:gap-y-9 sm:pt-9 md:grid-cols-4 md:gap-8"
-          >
-            {stats.map((stat) => (
-              <AnimatedCounter
-                key={stat.label}
-                value={stat.value}
-                suffix={stat.suffix}
-                label={stat.label}
-                size="sm"
-                tone="dark"
-              />
-            ))}
-          </motion.div>
+        {/* Mobile gets its own picture rather than a cropped backdrop. */}
+        <motion.div variants={item} initial="hidden" animate="visible" className="md:hidden">
+          <Media
+            slot="heroMobile"
+            aspect="aspect-[16/10]"
+            className="mt-12 ring-1 ring-white/12"
+            sizes="100vw"
+          />
         </motion.div>
       </motion.div>
+
+      {/* Second frame, overlapping the seam between field and picture. */}
+      <motion.div
+        initial={prefersReduced ? false : { opacity: 0, y: 28 }}
+        animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 0.5, ease: EASE }}
+        className="absolute bottom-[21%] left-[47%] z-20 hidden w-[18%] lg:block"
+      >
+        <Media
+          slot="heroInset"
+          aspect="aspect-[4/5]"
+          showLabel
+          className="shadow-elevated ring-1 ring-white/20"
+          sizes="25vw"
+        />
+      </motion.div>
+
+      {/* Stat strip anchored to the base of the frame. */}
+      <div className="relative z-10 mt-12 border-t border-white/12 bg-blueDeep/70 backdrop-blur-sm md:absolute md:inset-x-0 md:bottom-0 md:mt-0">
+        <div className="mx-auto grid w-full max-w-content grid-cols-2 gap-x-6 gap-y-7 px-5 py-7 sm:px-8 md:grid-cols-4 md:gap-8 md:py-8 lg:px-10">
+          {stats.map((stat) => (
+            <AnimatedCounter
+              key={stat.label}
+              value={stat.value}
+              suffix={stat.suffix}
+              label={stat.label}
+              size="sm"
+              tone="dark"
+            />
+          ))}
+        </div>
+      </div>
     </section>
+  );
+}
+
+/** A rough, hand-drawn stroke under the emphasised phrase. */
+function BrushUnderline() {
+  const prefersReduced = useReducedMotion();
+
+  return (
+    <svg
+      viewBox="0 0 300 14"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      className="absolute -bottom-1 left-0 h-[0.22em] w-full overflow-visible"
+    >
+      <motion.path
+        d="M2 9 C 60 3, 110 12, 168 6 C 214 1.5, 260 10, 298 5"
+        stroke="#B31942"
+        strokeWidth="5"
+        strokeLinecap="round"
+        fill="none"
+        opacity="0.85"
+        initial={prefersReduced ? false : { pathLength: 0 }}
+        animate={prefersReduced ? undefined : { pathLength: 1 }}
+        transition={{ duration: 1.1, delay: 0.9, ease: EASE }}
+      />
+    </svg>
   );
 }
