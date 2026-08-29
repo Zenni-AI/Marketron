@@ -30,15 +30,28 @@ export default function BidForm() {
     const payload = Object.fromEntries(new FormData(form).entries());
 
     try {
-      // TODO(step 5): POST to /api/bid.
-      await new Promise((resolve) => setTimeout(resolve, 900));
-      void payload;
+      const response = await fetch("/api/bid", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = (await response.json().catch(() => ({}))) as {
+        error?: string;
+      };
+
+      if (!response.ok) {
+        throw new Error(result.error ?? "Request failed.");
+      }
+
       setStatus("success");
       form.reset();
-    } catch {
+    } catch (error) {
       setStatus("error");
       setErrorMessage(
-        "Something went wrong sending your request. Please call 856-461-5888 and we'll take the details by phone."
+        error instanceof Error && error.message
+          ? `${error.message} You can also reach us at 856-461-5888.`
+          : "Something went wrong sending your request. Please call 856-461-5888 and we'll take the details by phone."
       );
     }
   }
