@@ -13,10 +13,10 @@ const PROJECT_TYPES = [
 ] as const;
 
 const inputClasses =
-  "w-full rounded-md border border-line bg-white px-4 py-3 font-sans text-[15px] text-blueDeep placeholder:text-steel/50 outline-none transition-all duration-200 ease-premium hover:border-steel/40 focus:border-red focus:shadow-focus-red";
+  "w-full rounded-md border border-line bg-white px-4 py-3 font-sans text-[15px] text-navy placeholder:text-steel/50 outline-none transition-all duration-200 ease-premium hover:border-steel/40 focus:border-navy focus:shadow-focus-navy";
 
 const labelClasses =
-  "mb-2 block font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-blueDeep";
+  "mb-2 block font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-navy";
 
 export default function BidForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -64,7 +64,7 @@ export default function BidForm() {
       {/* Red/blue gradient hairline giving the card its own edge treatment. */}
       <div
         aria-hidden="true"
-        className="absolute -inset-px rounded-[15px] bg-[linear-gradient(140deg,#B31942_0%,#0A2647_45%,#14396B_100%)] opacity-90"
+        className="absolute -inset-px rounded-[15px] bg-[linear-gradient(140deg,#FFCD05_0%,#1F295D_45%,#2C3A7A_100%)] opacity-90"
       />
 
       <div className="relative rounded-card bg-white p-6 shadow-elevated sm:p-9 lg:p-11">
@@ -82,7 +82,7 @@ export default function BidForm() {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.45, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blueDeep"
+                className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-navy"
               >
                 <svg
                   width="28"
@@ -105,7 +105,7 @@ export default function BidForm() {
                 time-sensitive, call{" "}
                 <a
                   href="tel:+18564615888"
-                  className="font-bold text-red underline-offset-4 hover:underline"
+                  className="font-bold text-navy underline-offset-4 hover:underline"
                 >
                   856-461-5888
                 </a>
@@ -114,7 +114,7 @@ export default function BidForm() {
               <button
                 type="button"
                 onClick={() => setStatus("idle")}
-                className="mt-8 font-sans text-xs font-bold uppercase tracking-[0.14em] text-blueDeep underline-offset-4 transition-colors duration-150 hover:text-red hover:underline"
+                className="mt-8 font-sans text-xs font-bold uppercase tracking-[0.14em] text-navy underline-offset-4 transition-colors duration-150 hover:text-navyMid hover:underline"
               >
                 Submit another request
               </button>
@@ -249,7 +249,7 @@ export default function BidForm() {
               {status === "error" && (
                 <p
                   role="alert"
-                  className="rounded-md border border-red/25 bg-red/5 px-4 py-3 text-sm leading-relaxed text-redDeep"
+                  className="rounded-md border border-danger/25 bg-danger/5 px-4 py-3 text-sm leading-relaxed text-dangerDeep"
                 >
                   {errorMessage}
                 </p>
@@ -259,7 +259,7 @@ export default function BidForm() {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="btn-red w-full px-8 py-4 text-sm disabled:cursor-not-allowed disabled:opacity-80 disabled:hover:translate-y-0"
+                  className="btn-primary w-full px-8 py-4 text-sm disabled:cursor-not-allowed disabled:opacity-80 disabled:hover:translate-y-0"
                 >
                   {status === "loading" ? (
                     <span className="flex items-center gap-3">
@@ -274,7 +274,7 @@ export default function BidForm() {
                   We respond to every request. Prefer to talk it through? Call{" "}
                   <a
                     href="tel:+18564615888"
-                    className="font-bold text-blueDeep underline-offset-4 hover:text-red hover:underline"
+                    className="font-bold text-navy underline-offset-4 hover:text-navyMid hover:underline"
                   >
                     856-461-5888
                   </a>
@@ -304,7 +304,7 @@ function Field({
     <div>
       <label htmlFor={htmlFor} className={labelClasses}>
         {label}
-        {required && <span className="ml-1 text-red">*</span>}
+        {required && <span className="ml-1 text-navy">*</span>}
       </label>
       {children}
     </div>

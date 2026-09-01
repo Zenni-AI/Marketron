@@ -89,7 +89,7 @@ export default function Services() {
                 {service.points.map((point) => (
                   <li key={point} className="flex items-start gap-3">
                     <CheckMark />
-                    <span className="text-[15px] leading-relaxed text-blueDeep">
+                    <span className="text-[15px] leading-relaxed text-navy">
                       {point}
                     </span>
                   </li>
@@ -107,7 +107,7 @@ function CheckMark() {
   return (
     <span
       aria-hidden="true"
-      className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blueDeep/[0.06] text-red transition-colors duration-250 group-hover:bg-red/10"
+      className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-navy/[0.06] text-navy transition-colors duration-250 group-hover:bg-gold/40"
     >
       <svg
         width="11"

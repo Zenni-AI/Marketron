@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 type StripeDividerProps = {
-  /** "light" for placement on offWhite/white, "dark" for blueDeep panels. */
+  /** "light" for placement on offWhite/white, "dark" for navy panels. */
   tone?: "light" | "dark";
   /** Draw the strokes on when the element enters the viewport. */
   animate?: boolean;
@@ -15,7 +15,7 @@ type StripeDividerProps = {
 };
 
 /**
- * The signature motif: a three-stroke diagonal paint sweep in red, white and
+ * The signature motif: a three-stroke diagonal paint sweep in gold, white and
  * blue. Strokes are drawn with a slight taper and round caps so they read as
  * brush passes rather than flag stripes. Used sparingly — once in the hero and
  * once as a section divider.
@@ -30,7 +30,7 @@ export default function StripeDivider({
   const prefersReduced = useReducedMotion();
 
   const strokes = [
-    { d: "M-40 96 C 300 84, 760 52, 1240 26", color: "#B31942", width: 15 },
+    { d: "M-40 96 C 300 84, 760 52, 1240 26", color: "#FFCD05", width: 15 },
     {
       d: "M-40 66 C 300 54, 760 24, 1240 -2",
       color: "#FFFFFF",
@@ -39,7 +39,7 @@ export default function StripeDivider({
     {
       d: "M-40 38 C 300 26, 760 -4, 1240 -30",
       // On navy panels the mid blue disappears — lift it just enough to read.
-      color: tone === "dark" ? "#3D6FB8" : "#14396B",
+      color: tone === "dark" ? "#7C8AC4" : "#2C3A7A",
       width: 10,
     },
   ];

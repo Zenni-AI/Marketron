@@ -13,7 +13,7 @@ const facts = [
 
 export default function CaseStudy() {
   return (
-    <section id="project" className="relative overflow-hidden bg-blueDeep">
+    <section id="project" className="relative overflow-hidden bg-navy">
       <StripeDivider tone="dark" className="h-14 w-full opacity-80 md:h-20" />
       <Texture opacity={0.26} />
 
@@ -49,7 +49,7 @@ export default function CaseStudy() {
           <div className="pt-14 lg:pt-0">
             <Reveal>
               <div className="mb-5 flex items-center gap-4">
-                <span className="h-[3px] w-10 bg-red" />
+                <span className="h-[3px] w-10 bg-gold" />
                 <p className="eyebrow text-white/60">Featured Project</p>
               </div>
             </Reveal>
@@ -66,7 +66,7 @@ export default function CaseStudy() {
                   the caliber of work JVS Painting has provided for over four
                   decades.
                 </p>
-                <p className="border-l-2 border-red pl-5 font-display text-xl leading-[1.6] text-white md:text-2xl">
+                <p className="border-l-2 border-gold pl-5 font-display text-xl leading-[1.6] text-white md:text-2xl">
                   Work of this scale requires more than a paint crew: it takes a
                   contractor who understands security protocols, scheduling
                   constraints, and the standard of finish a government facility
@@ -80,7 +80,7 @@ export default function CaseStudy() {
                 {facts.map((fact) => (
                   <div
                     key={fact.label}
-                    className="bg-blueDeep px-6 py-5 transition-colors duration-250 ease-premium hover:bg-blueMid"
+                    className="bg-navy px-6 py-5 transition-colors duration-250 ease-premium hover:bg-navyMid"
                   >
                     <dt className="font-sans text-[10px] font-bold uppercase tracking-[0.16em] text-white/45">
                       {fact.label}

@@ -57,8 +57,8 @@ export default function Gallery() {
               />
             </div>
             <figcaption className="mt-4 flex items-start gap-2.5">
-              <span aria-hidden="true" className="mt-[7px] h-1 w-1 shrink-0 rotate-45 bg-red" />
-              <span className="text-[13px] font-bold leading-snug text-blueDeep">
+              <span aria-hidden="true" className="mt-[7px] h-1 w-1 shrink-0 rotate-45 bg-gold" />
+              <span className="text-[13px] font-bold leading-snug text-navy">
                 {frame.caption}
               </span>
             </figcaption>

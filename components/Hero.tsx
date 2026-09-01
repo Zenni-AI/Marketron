@@ -80,11 +80,11 @@ export default function Hero() {
         {/* Feather the picture into the navy field instead of butting it. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(90deg,#0A2647_0%,rgba(10,38,71,0.85)_18%,rgba(10,38,71,0.12)_52%,transparent_100%)]"
+          className="absolute inset-0 bg-[linear-gradient(90deg,#1F295D_0%,rgba(10,38,71,0.85)_18%,rgba(10,38,71,0.12)_52%,transparent_100%)]"
         />
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(0deg,#0A2647,transparent)]"
+          className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(0deg,#1F295D,transparent)]"
         />
       </motion.div>
 
@@ -101,7 +101,7 @@ export default function Hero() {
           className="max-w-xl"
         >
           <motion.div variants={item} className="mb-7 flex items-center gap-4">
-            <span className="h-[3px] w-10 bg-red" />
+            <span className="h-[3px] w-10 bg-gold" />
             <p className="eyebrow text-white/70">
               Commercial &amp; Government Painting Contractors
             </p>
@@ -112,7 +112,7 @@ export default function Hero() {
             className="text-display-sm text-balance text-white sm:text-display-md lg:text-display-lg"
           >
             40+ Years of Painting Trusted by{" "}
-            <span className="relative inline-block text-red">
+            <span className="relative inline-block text-gold">
               Government &amp; Commercial
               <BrushUnderline />
             </span>{" "}
@@ -135,7 +135,7 @@ export default function Hero() {
             <button
               type="button"
               onClick={() => scrollToId(BID_FORM_ID)}
-              className="btn-red px-8 py-4"
+              className="btn-primary px-8 py-4"
             >
               Submit a Bid Request
             </button>
@@ -191,7 +191,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Stat strip anchored to the base of the frame. */}
-      <div className="relative z-10 mt-12 border-t border-white/12 bg-blueDeep/70 backdrop-blur-sm md:absolute md:inset-x-0 md:bottom-0 md:mt-0">
+      <div className="relative z-10 mt-12 border-t border-white/12 bg-navy/70 backdrop-blur-sm md:absolute md:inset-x-0 md:bottom-0 md:mt-0">
         <div className="mx-auto grid w-full max-w-content grid-cols-2 gap-x-6 gap-y-7 px-5 py-7 sm:px-8 md:grid-cols-4 md:gap-8 md:py-8 lg:px-10">
           {stats.map((stat) => (
             <AnimatedCounter
@@ -222,7 +222,7 @@ function BrushUnderline() {
     >
       <motion.path
         d="M2 9 C 60 3, 110 12, 168 6 C 214 1.5, 260 10, 298 5"
-        stroke="#B31942"
+        stroke="#FFCD05"
         strokeWidth="5"
         strokeLinecap="round"
         fill="none"

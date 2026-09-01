@@ -101,8 +101,8 @@ export async function POST(request: Request) {
   ];
 
   const html = `
-    <div style="font-family:Arial,Helvetica,sans-serif;color:#0A2647;max-width:640px">
-      <h2 style="font-family:Georgia,'Times New Roman',serif;color:#0A2647;margin:0 0 4px">
+    <div style="font-family:Arial,Helvetica,sans-serif;color:#1F295D;max-width:640px">
+      <h2 style="font-family:Georgia,'Times New Roman',serif;color:#1F295D;margin:0 0 4px">
         New Bid Request
       </h2>
       <p style="color:#4A5568;margin:0 0 24px;font-size:14px">
@@ -116,7 +116,7 @@ export async function POST(request: Request) {
             <td style="padding:10px 0;border-bottom:1px solid #E2E5EA;color:#4A5568;width:40%">${escapeHtml(
               label
             )}</td>
-            <td style="padding:10px 0;border-bottom:1px solid #E2E5EA;color:#0A2647;font-weight:bold">${escapeHtml(
+            <td style="padding:10px 0;border-bottom:1px solid #E2E5EA;color:#1F295D;font-weight:bold">${escapeHtml(
               value
             )}</td>
           </tr>`

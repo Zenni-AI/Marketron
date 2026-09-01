@@ -5,7 +5,7 @@ export const alt =
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Generated share card: same navy ground, red accent and stripe sweep as the
+// Generated share card: same navy ground, gold accent and stripe sweep as the
 // hero, so a link preview reads as the same brand.
 export default async function OpengraphImage() {
   return new ImageResponse(
@@ -17,7 +17,7 @@ export default async function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "linear-gradient(160deg, #0A2647 0%, #14396B 100%)",
+          background: "linear-gradient(160deg, #1F295D 0%, #2C3A7A 100%)",
           padding: "72px",
           position: "relative",
         }}
@@ -29,7 +29,7 @@ export default async function OpengraphImage() {
               height: "56px",
               borderRadius: "10px",
               background: "#FFFFFF",
-              color: "#0A2647",
+              color: "#1F295D",
               fontSize: "22px",
               fontWeight: 700,
               display: "flex",
@@ -66,15 +66,15 @@ export default async function OpengraphImage() {
             }}
           >
             40+ Years of Painting Trusted by&nbsp;
-            <span style={{ color: "#B31942" }}>Government &amp; Commercial</span>
+            <span style={{ color: "#FFCD05" }}>Government &amp; Commercial</span>
             &nbsp;Clients
           </div>
         </div>
 
         <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-          <div style={{ height: "10px", width: "300px", background: "#B31942" }} />
+          <div style={{ height: "10px", width: "300px", background: "#FFCD05" }} />
           <div style={{ height: "10px", width: "220px", background: "#FFFFFF" }} />
-          <div style={{ height: "10px", width: "150px", background: "#3D6FB8" }} />
+          <div style={{ height: "10px", width: "150px", background: "#7C8AC4" }} />
         </div>
       </div>
     ),

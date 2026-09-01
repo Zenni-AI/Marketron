@@ -33,10 +33,10 @@ export default function SectorMarquee() {
           <div key={pass} className="flex items-center gap-10" aria-hidden={pass === 1}>
             {SECTORS.map((sector) => (
               <span key={sector} className="flex items-center gap-10">
-                <span className="whitespace-nowrap font-sans text-[11px] font-bold uppercase tracking-[0.18em] text-blueDeep/70">
+                <span className="whitespace-nowrap font-sans text-[11px] font-bold uppercase tracking-[0.18em] text-navy/70">
                   {sector}
                 </span>
-                <span className="h-1 w-1 shrink-0 rotate-45 bg-red" />
+                <span className="h-1 w-1 shrink-0 rotate-45 bg-gold" />
               </span>
             ))}
           </div>

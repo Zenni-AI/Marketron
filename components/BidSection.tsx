@@ -10,20 +10,20 @@ export default function BidSection() {
       id={BID_FORM_ID}
       className="relative overflow-hidden bg-offWhite py-20 md:py-section-lg"
     >
-      {/* Subtle red/blue wash marking this as the conversion point. */}
+      {/* Subtle gold/blue wash marking this as the conversion point. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_0%,rgba(20,57,107,0.10),transparent_55%),radial-gradient(ellipse_at_85%_100%,rgba(179,25,66,0.09),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_0%,rgba(31,41,93,0.10),transparent_55%),radial-gradient(ellipse_at_85%_100%,rgba(255,205,5,0.12),transparent_55%)]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,#B31942_20%,#0A2647_80%,transparent)] opacity-40"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,#FFCD05_20%,#1F295D_80%,transparent)] opacity-40"
       />
 
       <div className="relative mx-auto w-full max-w-content px-5 sm:px-8 lg:px-10">
         <div className="mx-auto max-w-2xl text-center">
           <Reveal>
-            <p className="eyebrow mb-5 text-red">Start Here</p>
+            <p className="eyebrow mb-5 text-navy">Start Here</p>
           </Reveal>
           <Reveal delay={0.08}>
             <h2 className="text-display-sm text-balance md:text-display-md">

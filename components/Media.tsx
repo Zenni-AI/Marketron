@@ -107,7 +107,7 @@ export default function Media({
 
       {showLabel && item.label && (
         <div className="pointer-events-none absolute bottom-0 left-0 flex items-center gap-2.5 p-4">
-          <span className="h-3 w-[3px] bg-red" />
+          <span className="h-3 w-[3px] bg-gold" />
           <span className="font-sans text-[10px] font-bold uppercase tracking-[0.16em] text-white/85">
             {item.label}
           </span>

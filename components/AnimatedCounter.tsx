@@ -69,7 +69,7 @@ export default function AnimatedCounter({
     };
   }, [inView, isNumeric, value, duration, prefersReduced]);
 
-  const figureColor = tone === "dark" ? "text-white" : "text-blueDeep";
+  const figureColor = tone === "dark" ? "text-white" : "text-navy";
   const labelColor = tone === "dark" ? "text-white/60" : "text-steel";
 
   return (
@@ -80,7 +80,11 @@ export default function AnimatedCounter({
         className={`font-display font-normal leading-none ${sizeClasses[size]} ${figureColor}`}
       >
         {display}
-        {suffix && <span className="text-red">{suffix}</span>}
+        {suffix && (
+          <span className={tone === "dark" ? "text-gold" : "text-navy"}>
+            {suffix}
+          </span>
+        )}
       </div>
       <div
         className={`mt-3 font-sans text-xs font-bold uppercase leading-relaxed tracking-[0.14em] ${labelColor}`}

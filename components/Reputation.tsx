@@ -11,7 +11,7 @@ import { Reveal } from "./Section";
  */
 export default function Reputation() {
   return (
-    <section id="reputation" className="relative overflow-hidden bg-blueDeep">
+    <section id="reputation" className="relative overflow-hidden bg-navy">
       <div className="absolute inset-0">
         <Media
           slot="reputationBand"
@@ -34,7 +34,7 @@ export default function Reputation() {
           <div className="relative">
             <span
               aria-hidden="true"
-              className="absolute -left-4 top-2 h-[calc(100%-1rem)] w-1 rounded-full bg-red-gradient md:-left-8"
+              className="absolute -left-4 top-2 h-[calc(100%-1rem)] w-1 rounded-full bg-gold-gradient md:-left-8"
             />
             <AnimatedCounter
               value={40}

@@ -99,7 +99,7 @@ export default function Section({
             {eyebrow && (
               <Reveal>
                 <p
-                  className={`eyebrow mb-5 ${isDark ? "text-white/55" : "text-red"}`}
+                  className={`eyebrow mb-5 ${isDark ? "text-white/55" : "text-navy"}`}
                 >
                   {eyebrow}
                 </p>
@@ -109,7 +109,7 @@ export default function Section({
               <Reveal delay={0.08}>
                 <h2
                   className={`text-display-sm md:text-display-md text-balance ${
-                    isDark ? "text-white" : "text-blueDeep"
+                    isDark ? "text-white" : "text-navy"
                   }`}
                 >
                   {heading}

@@ -9,14 +9,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        blueDeep: "#0A2647",
-        blueMid: "#14396B",
-        red: "#B31942",
-        redDeep: "#8C1332",
+        // Taken from the J.V.S. Painting logo artwork.
+        navy: "#1F295D",
+        navyDeep: "#1C254F",
+        navyMid: "#2C3A7A",
+        gold: "#FFCD05",
+        goldDeep: "#E5B700",
         white: "#FFFFFF",
         offWhite: "#F7F8FA",
         steel: "#4A5568",
         line: "#E2E5EA",
+        // Kept separate from the brand accent: error states must not read as
+        // brand gold, and gold on white cannot carry text contrast anyway.
+        danger: "#B3261E",
+        dangerDeep: "#8C1D18",
       },
       fontFamily: {
         // System stacks only — no webfont request, so no font-related layout shift.
@@ -43,13 +49,14 @@ const config: Config = {
         card: "14px",
       },
       boxShadow: {
-        card: "0 1px 2px rgba(10, 38, 71, 0.04), 0 12px 32px -12px rgba(10, 38, 71, 0.14)",
+        card: "0 1px 2px rgba(31, 41, 93, 0.04), 0 12px 32px -12px rgba(31, 41, 93, 0.14)",
         "card-hover":
-          "0 2px 4px rgba(10, 38, 71, 0.06), 0 28px 56px -18px rgba(10, 38, 71, 0.28)",
+          "0 2px 4px rgba(31, 41, 93, 0.06), 0 28px 56px -18px rgba(31, 41, 93, 0.28)",
         elevated:
-          "0 2px 6px rgba(10, 38, 71, 0.05), 0 40px 80px -28px rgba(10, 38, 71, 0.35)",
-        "focus-red": "0 0 0 3px rgba(179, 25, 66, 0.16)",
-        "focus-blue": "0 0 0 3px rgba(20, 57, 107, 0.16)",
+          "0 2px 6px rgba(31, 41, 93, 0.05), 0 40px 80px -28px rgba(31, 41, 93, 0.35)",
+        // Gold has too little contrast against white to carry a focus ring on
+        // its own, so the ring is navy and gold only edges the control.
+        "focus-navy": "0 0 0 3px rgba(31, 41, 93, 0.18)",
       },
       transitionDuration: {
         "150": "150ms",
@@ -60,9 +67,9 @@ const config: Config = {
       },
       backgroundImage: {
         "hero-gradient":
-          "linear-gradient(160deg, #0A2647 0%, #0A2647 38%, #14396B 100%)",
-        "blue-gradient": "linear-gradient(135deg, #0A2647 0%, #14396B 100%)",
-        "red-gradient": "linear-gradient(135deg, #B31942 0%, #8C1332 100%)",
+          "linear-gradient(160deg, #1C254F 0%, #1F295D 38%, #2C3A7A 100%)",
+        "navy-gradient": "linear-gradient(135deg, #1F295D 0%, #2C3A7A 100%)",
+        "gold-gradient": "linear-gradient(135deg, #FFCD05 0%, #E5B700 100%)",
       },
       keyframes: {
         "stripe-draw": {

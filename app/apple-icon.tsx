@@ -14,7 +14,7 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0A2647",
+          background: "#1F295D",
           color: "#FFFFFF",
           fontSize: 62,
           fontWeight: 700,
@@ -29,7 +29,7 @@ export default function AppleIcon() {
             left: 0,
             width: "100%",
             height: 22,
-            background: "#B31942",
+            background: "#FFCD05",
           }}
         />
         JVS

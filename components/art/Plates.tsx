@@ -7,7 +7,7 @@ import { useId } from "react";
  *
  * Every image slot renders one of these until real project photography is set
  * in `lib/media.ts`. They are built like screen prints rather than diagrams:
- * flat tonal masses, one light source, a single red accent and a grain pass.
+ * flat tonal masses, one light source, a single gold accent and a grain pass.
  *
  * Canvas is 240x120 and frames crop it with `slice`, so composition follows
  * one rule: the subject lives in the centre band (x 72-168, the narrowest crop
@@ -30,30 +30,32 @@ type PlateProps = {
   tone?: "night" | "plaster";
 };
 
+// Every blue is drawn from the logo navy so the artwork sits in the same
+// family as the page rather than forming a second palette.
 const NIGHT = {
-  sky0: "#0B2A50",
-  sky1: "#2F639C",
-  mass: "#061729",
-  massLit: "#0E2E52",
-  mid: "#164574",
-  lit: "#D8E4F3",
-  line: "rgba(216,228,243,0.55)",
-  lineSoft: "rgba(216,228,243,0.22)",
-  red: "#B31942",
-  redLit: "#D1274F",
+  sky0: "#1C254F",
+  sky1: "#4557A5",
+  mass: "#0E1330",
+  massLit: "#232E68",
+  mid: "#33418A",
+  lit: "#E3E7F5",
+  line: "rgba(227,231,245,0.55)",
+  lineSoft: "rgba(227,231,245,0.22)",
+  gold: "#FFCD05",
+  goldLit: "#FFE066",
 };
 
 const PLASTER = {
-  sky0: "#E7ECF3",
+  sky0: "#E9ECF5",
   sky1: "#FBFCFD",
-  mass: "#0A2647",
-  massLit: "#1B4272",
-  mid: "#C4CDDA",
+  mass: "#1F295D",
+  massLit: "#33418A",
+  mid: "#C6CBDE",
   lit: "#FFFFFF",
-  line: "rgba(10,38,71,0.45)",
-  lineSoft: "rgba(10,38,71,0.18)",
-  red: "#B31942",
-  redLit: "#D1274F",
+  line: "rgba(31,41,93,0.45)",
+  lineSoft: "rgba(31,41,93,0.18)",
+  gold: "#FFCD05",
+  goldLit: "#E5B700",
 };
 
 type Palette = typeof NIGHT;
@@ -106,10 +108,10 @@ export default function Plate({
         </filter>
 
         <radialGradient id={vigId} cx="50%" cy="45%" r="72%">
-          <stop offset="50%" stopColor="#000814" stopOpacity="0" />
+          <stop offset="50%" stopColor="#080B1C" stopOpacity="0" />
           <stop
             offset="100%"
-            stopColor="#000814"
+            stopColor="#080B1C"
             stopOpacity={tone === "night" ? 0.5 : 0.16}
           />
         </radialGradient>
@@ -182,7 +184,7 @@ function Worker({
           />
           <path
             d="M7.5 -15.9 L10 -13.9"
-            stroke={c.red}
+            stroke={c.gold}
             strokeWidth="2.1"
             strokeLinecap="round"
           />
@@ -240,8 +242,8 @@ function Facade({ c }: { c: Palette }) {
       ))}
 
       {/* The band being coated */}
-      <rect x="0" y="86" width="240" height="10" fill={c.red} />
-      <rect x="0" y="84" width="240" height="2" fill={c.redLit} opacity="0.7" />
+      <rect x="0" y="86" width="240" height="10" fill={c.gold} />
+      <rect x="0" y="84" width="240" height="2" fill={c.goldLit} opacity="0.7" />
 
       {/* Entrance, centred so portrait crops still read as a building */}
       <rect x="110" y="88" width="22" height="14" fill={c.mass} />
@@ -330,11 +332,11 @@ function Hangar({ c }: { c: Palette }) {
       <path d="M114 70 L120 70 L120 75 L113 77 Z" fill={c.lit} opacity="0.5" />
       <path d="M94 94 L138 94 L136 98 L96 98 Z" fill={c.mid} opacity="0.85" />
 
-      <rect x="62" y="96" width="116" height="6" fill={c.red} />
+      <rect x="62" y="96" width="116" height="6" fill={c.gold} />
 
       {/* Mast */}
       <path d="M212 66 L212 34" stroke={c.line} strokeWidth="0.9" />
-      <path d="M212 36 L221 39 L212 42 Z" fill={c.red} />
+      <path d="M212 36 L221 39 L212 42 Z" fill={c.gold} />
 
       {/* Apron */}
       <rect x="0" y="102" width="240" height="18" fill={c.mass} opacity="0.92" />
@@ -398,7 +400,7 @@ function Warehouse({ c }: { c: Palette }) {
           <path key={y} d={`M140 ${y} L186 ${y}`} />
         ))}
       </g>
-      <rect x="140" y="86" width="46" height="6" fill={c.red} />
+      <rect x="140" y="86" width="46" height="6" fill={c.gold} />
 
       <rect x="0" y="92" width="240" height="28" fill={c.mass} opacity="0.88" />
       <rect x="0" y="92" width="240" height="1.2" fill={c.lit} opacity="0.28" />
@@ -427,7 +429,7 @@ function Lift({ c }: { c: Palette }) {
           sits in the centre band so tall crops keep the subject. */}
       <rect x="0" y="0" width="108" height="120" fill={c.mass} />
       <rect x="0" y="52" width="108" height="68" fill={c.massLit} />
-      <rect x="0" y="49" width="108" height="3.4" fill={c.red} />
+      <rect x="0" y="49" width="108" height="3.4" fill={c.gold} />
       <rect x="104" y="0" width="4" height="120" fill={c.lit} opacity="0.26" />
       <g stroke={c.lineSoft} strokeWidth="0.6">
         {[16, 32, 86, 104].map((y) => (
@@ -444,7 +446,7 @@ function Lift({ c }: { c: Palette }) {
 
       <g>
         <path d="M174 104 L142 68" stroke={c.mass} strokeWidth="4.6" strokeLinecap="round" />
-        <path d="M142 68 L106 40" stroke={c.red} strokeWidth="3.8" strokeLinecap="round" />
+        <path d="M142 68 L106 40" stroke={c.gold} strokeWidth="3.8" strokeLinecap="round" />
         <rect x="154" y="96" width="34" height="11" rx="2.5" fill={c.mass} />
         <circle cx="162" cy="110" r="5" fill={c.mass} />
         <circle cx="180" cy="110" r="5" fill={c.mass} />
@@ -473,10 +475,10 @@ function Crew({ c }: { c: Palette }) {
       {/* Raw wall above, finished wall below, fresh coat rolled to a wet edge */}
       <rect x="0" y="0" width="240" height="30" fill={c.mid} opacity="0.5" />
       <rect x="0" y="56" width="240" height="38" fill={c.mass} opacity="0.35" />
-      <path d="M0 30 L146 30 C 154 38, 146 48, 154 56 L0 56 Z" fill={c.red} />
+      <path d="M0 30 L146 30 C 154 38, 146 48, 154 56 L0 56 Z" fill={c.gold} />
       <path
         d="M146 30 C 154 38, 146 48, 154 56"
-        stroke={c.redLit}
+        stroke={c.goldLit}
         strokeWidth="1.6"
         fill="none"
       />
@@ -508,7 +510,7 @@ function Crew({ c }: { c: Palette }) {
       </g>
 
       <rect x="150" y="88" width="11" height="6" fill={c.mass} />
-      <rect x="150" y="87" width="11" height="1.5" fill={c.red} />
+      <rect x="150" y="87" width="11" height="1.5" fill={c.gold} />
 
       <Worker x={100} y={94} c={c} pose="roll" />
       <Worker x={134} y={94} c={c} pose="roll" />
@@ -538,8 +540,8 @@ function WaterTower({ c }: { c: Palette }) {
         strokeWidth="1.5"
         opacity="0.5"
       />
-      <rect x="84" y="48" width="72" height="8" fill={c.red} />
-      <rect x="84" y="48" width="72" height="1.6" fill={c.redLit} />
+      <rect x="84" y="48" width="72" height="8" fill={c.gold} />
+      <rect x="84" y="48" width="72" height="1.6" fill={c.goldLit} />
 
       <rect x="80" y="63" width="80" height="1.9" fill={c.lit} opacity="0.5" />
       <g stroke={c.lit} strokeWidth="0.7" opacity="0.35">
@@ -589,8 +591,8 @@ function Steel({ c }: { c: Palette }) {
       </g>
 
       {/* Coated half stops mid-frame — the story of the picture */}
-      <rect x="0" y="36" width="118" height="11" fill={c.red} />
-      <rect x="0" y="62" width="118" height="8" fill={c.red} opacity="0.9" />
+      <rect x="0" y="36" width="118" height="11" fill={c.gold} />
+      <rect x="0" y="62" width="118" height="8" fill={c.gold} opacity="0.9" />
 
       <g fill={c.lit} opacity="0.38">
         {Array.from({ length: 28 }, (_, i) => (
@@ -627,11 +629,11 @@ function Detail({ c }: { c: Palette }) {
       />
       <path
         d="M-4 44 C 75 38, 138 50, 246 40 L246 72 C 156 80, 69 68, -4 76 Z"
-        fill={c.red}
+        fill={c.gold}
       />
       <path
         d="M-4 44 C 75 38, 138 50, 246 40"
-        stroke={c.redLit}
+        stroke={c.goldLit}
         strokeWidth="1.8"
         fill="none"
       />
