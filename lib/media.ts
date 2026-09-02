@@ -1,122 +1,75 @@
-import type { PlateName } from "@/components/art/Plates";
-
 /**
  * Every image slot on the site, in one place.
  *
- * Each slot currently renders a hand-drawn plate (see components/art/Plates).
- * To use a real photograph instead, drop the file in /public/work and set
- * `src` — nothing else changes. Keep `alt` accurate to whatever is shown.
+ * No slot has a photograph yet, so each one renders a plain technical
+ * placeholder (components/art/TechnicalField). Sections that would look empty
+ * as a row of placeholders check `hasPhotography` and render their
+ * typographic layout instead — the page never depends on imagery it does not
+ * have.
  *
- *   { ..., src: "/work/hangar-exterior.jpg", alt: "Crew coating a hangar door" }
+ * To use a real photograph, drop the file in /public/work and set `src`:
+ *
+ *   caseMain: { ..., src: "/work/hangar-exterior.jpg", alt: "…" }
  *
  * `note` is the art direction for that slot: what to shoot, and in what shape.
  */
 export type MediaSlot = {
   id: string;
-  plate: PlateName;
   alt: string;
-  /** Short overlay label. Keep it descriptive of the work, not a claim. */
-  label?: string;
+  /** Short label shown on the placeholder and as an overlay chip. */
+  label: string;
   note: string;
   src?: string;
-  tone?: "night" | "plaster";
 };
 
 export const media = {
-  heroBackdrop: {
-    id: "heroBackdrop",
-    plate: "lift",
-    alt: "Painter working from a boom lift against a tall exterior wall",
-    note: "Fills the right half of the hero, so it is cropped TALL. A worker at height with a lot of wall around them — scale is the point. Shoot late afternoon.",
-  },
-  heroMobile: {
-    id: "heroMobile",
-    plate: "facade",
-    alt: "Commercial building under scaffold during an exterior repaint",
-    note: "The hero picture on phones — landscape 16:10, a scaffolded building mid-job.",
-  },
-  heroInset: {
-    id: "heroInset",
-    plate: "crew",
-    alt: "Crew rolling out a wall with drop cloths down",
-    label: "Crew at work",
-    note: "Small portrait frame overlapping the hero seam. People and hands, close in.",
-  },
-  serviceGovernment: {
-    id: "serviceGovernment",
-    plate: "hangar",
-    alt: "Aircraft maintenance hangar at a military installation",
-    note: "Landscape 3:2. Hangar, barracks or admin building on an installation. No identifiable security detail.",
-  },
-  serviceCommercial: {
-    id: "serviceCommercial",
-    plate: "warehouse",
-    alt: "Warehouse interior with racking and a lift set up for painting",
-    note: "Landscape 3:2. Warehouse or big-box interior, lift staged, floor protected.",
+  heroPrimary: {
+    id: "heroPrimary",
+    alt: "JVS Painting crew at work on a commercial facility",
+    label: "Facility exterior",
+    note: "The one hero photograph. Landscape 3:2, shot wide with quiet space on the left third for the headline. A real crew on a real building — no stock.",
   },
   caseMain: {
     id: "caseMain",
-    plate: "hangar",
-    alt: "Hangar exterior at a New Jersey military installation",
+    alt: "Facility exterior at a New Jersey military installation",
     label: "Facility exterior",
-    note: "The hero shot of the featured project. Landscape 4:3, straight-on, the whole structure in frame.",
+    note: "Featured project. Landscape 4:3, straight-on, whole structure in frame. Clear it with the facility before publishing.",
   },
   caseDetail: {
     id: "caseDetail",
-    plate: "crew",
-    alt: "Crew cutting in a wall with drop cloths down",
+    alt: "Crew preparing and coating a wall on site",
     label: "Crew at work",
     note: "Portrait 3:4. Two or three of the crew working — hands, rollers, masking.",
   },
-  caseFinish: {
-    id: "caseFinish",
-    plate: "detail",
-    alt: "Close detail of a finished coated surface",
-    label: "Finish",
-    note: "Square macro of the finished surface — the edge quality is the sell.",
-    tone: "plaster" as const,
+  workExterior: {
+    id: "workExterior",
+    alt: "Multi-story facade being repainted",
+    label: "Facades & exteriors",
+    note: "Capability tile, landscape 3:2.",
   },
-  workFacade: {
-    id: "workFacade",
-    plate: "facade",
-    alt: "Multi-story facade being repainted from scaffold",
-    label: "Facade & exteriors",
-    note: "Gallery frame, portrait 4:5.",
-  },
-  workWarehouse: {
-    id: "workWarehouse",
-    plate: "warehouse",
-    alt: "Industrial warehouse interior painting",
+  workIndustrial: {
+    id: "workIndustrial",
+    alt: "Warehouse interior coating in progress",
     label: "Warehouse & industrial",
-    note: "Gallery frame, portrait 4:5.",
+    note: "Capability tile, landscape 3:2.",
   },
-  workTower: {
-    id: "workTower",
-    plate: "watertower",
-    alt: "Elevated water tank being recoated",
+  workStructures: {
+    id: "workStructures",
+    alt: "Elevated tank or structural steel being recoated",
     label: "Tanks & structures",
-    note: "Gallery frame, portrait 4:5.",
+    note: "Capability tile, landscape 3:2.",
   },
-  workSteel: {
-    id: "workSteel",
-    plate: "steel",
-    alt: "Structural steel being coated from a suspended stage",
-    label: "Structural steel",
-    note: "Gallery frame, portrait 4:5.",
-  },
-  workCrew: {
-    id: "workCrew",
-    plate: "crew",
-    alt: "Interior repaint in progress",
-    label: "Interiors",
-    note: "Gallery frame, portrait 4:5.",
-  },
-  reputationBand: {
-    id: "reputationBand",
-    plate: "steel",
-    alt: "Coated structural steel spanning a facility",
-    note: "Full-bleed band behind the 40-year statement. Wide and dark, low detail — type sits on top.",
+  workInterior: {
+    id: "workInterior",
+    alt: "Interior repaint in an occupied building",
+    label: "Occupied interiors",
+    note: "Capability tile, landscape 3:2.",
   },
 } satisfies Record<string, MediaSlot>;
 
 export type MediaKey = keyof typeof media;
+
+/** True once any slot has a real photograph behind it. */
+export const hasPhotography = Object.values(media as Record<string, MediaSlot>).some(
+  (slot) => Boolean(slot.src)
+);
