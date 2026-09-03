@@ -33,7 +33,7 @@ export default function Header() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-[72px] w-full max-w-content items-center justify-between gap-4 px-5 sm:px-8 lg:px-10">
+      <div className="mx-auto flex h-[84px] w-full max-w-content sm:h-[92px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-10">
         <a
           href="#top"
           className="flex items-center transition-opacity duration-250 hover:opacity-80"
@@ -44,7 +44,7 @@ export default function Header() {
           <Logo
             variant={scrolled ? "navy" : "knockout"}
             priority
-            className="h-10 sm:h-12"
+            className="h-12 sm:h-16"
           />
         </a>
 

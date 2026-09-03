@@ -19,7 +19,7 @@ const stats = [
 /** The facts a contracting officer scans for before reading anything else. */
 const snapshot = [
   ["Established", "Over 40 years in business"],
-  ["Contract types", "Government & commercial"],
+  ["Contract types", "Government, municipal & commercial"],
   ["Workforce", "E-Verify participating employer"],
   ["Coverage", "Licensed, bonded & fully insured"],
   ["Wage compliance", "Prevailing wage / Davis-Bacon"],
@@ -68,8 +68,10 @@ export default function Hero() {
           <div>
             <motion.div variants={item} className="mb-8 flex items-center gap-4">
               <span className="h-[3px] w-10 bg-gold" />
-              <p className="eyebrow text-gold">
-                Commercial &amp; Government Painting Contractors
+              {/* Kept to one line so it stays aligned with the rule; the
+                  headline below carries the rest. */}
+              <p className="eyebrow whitespace-nowrap text-gold">
+                Government &middot; Municipal &middot; Commercial
               </p>
             </motion.div>
 
@@ -86,9 +88,9 @@ export default function Hero() {
               variants={item}
               className="mt-8 max-w-xl text-base leading-[1.75] text-white/85 sm:text-lg"
             >
-              From military installations to major commercial facilities, JVS
-              Painting has delivered dependable, code-compliant work across New
-              Jersey for over four decades.
+              From military installations to municipal buildings and major
+              commercial facilities, JVS Painting has delivered dependable,
+              code-compliant work across New Jersey for over four decades.
             </motion.p>
 
             <motion.div

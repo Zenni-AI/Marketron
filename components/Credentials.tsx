@@ -20,7 +20,7 @@ const credentials = [
   {
     Icon: IconDocument,
     title: "Prevailing Wage & Davis-Bacon",
-    body: "Familiar with certified payroll and prevailing wage determinations, and set up to report against them.",
+    body: "Familiar with certified payroll and wage determinations on both federal Davis-Bacon and New Jersey prevailing wage work.",
   },
   {
     Icon: IconClock,

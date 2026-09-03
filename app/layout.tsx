@@ -9,14 +9,17 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default:
-      "JVS Painting Inc. | Commercial & Government Painting Contractors in New Jersey",
+      "JVS Painting Inc. | Government, Municipal & Commercial Painting Contractors in New Jersey",
     template: "%s | JVS Painting Inc.",
   },
   description:
-    "JVS Painting Inc. is a New Jersey commercial and government contract painting company with over 40 years of experience — military installations, warehouses, offices and multi-family properties. Licensed, insured and E-Verify participating. Request a bid.",
+    "JVS Painting Inc. is a New Jersey painting contractor with over 40 years of experience on government, municipal and commercial work — military installations, municipal buildings, schools, warehouses, offices and multi-family properties. Licensed, bonded, insured and E-Verify participating. Request a bid.",
   keywords: [
     "commercial painting contractor New Jersey",
     "government contract painting",
+    "municipal painting contractor NJ",
+    "school district painting contractor",
+    "public works painting contractor",
     "military base painting contractor",
     "Davis-Bacon prevailing wage painting",
     "industrial painting NJ",
@@ -36,15 +39,15 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: "JVS Painting Inc.",
     title:
-      "JVS Painting Inc. | Commercial & Government Painting Contractors in New Jersey",
+      "JVS Painting Inc. | Government, Municipal & Commercial Painting Contractors in New Jersey",
     description:
-      "40+ years of commercial and government contract painting across New Jersey — from military installations to major commercial facilities. Licensed, insured, E-Verify participating. Submit a bid request.",
+      "40+ years of government, municipal and commercial painting across New Jersey — from military installations to municipal buildings and major commercial facilities. Licensed, bonded, insured, E-Verify participating. Submit a bid request.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "JVS Painting Inc. | Commercial & Government Painting Contractors",
+    title: "JVS Painting Inc. | Government, Municipal & Commercial Painting Contractors",
     description:
-      "40+ years of dependable, code-compliant painting for government installations and commercial properties across New Jersey.",
+      "40+ years of dependable, code-compliant painting for government installations, municipal facilities and commercial properties across New Jersey.",
   },
   robots: {
     index: true,
@@ -66,7 +69,7 @@ const localBusinessJsonLd = {
   "@type": "GeneralContractor",
   name: "JVS Painting Inc.",
   description:
-    "Commercial and government contract painting contractor serving New Jersey for over 40 years.",
+    "Government, municipal and commercial painting contractor serving New Jersey for over 40 years.",
   url: siteUrl,
   telephone: "+1-856-461-5888",
   address: {
@@ -80,6 +83,8 @@ const localBusinessJsonLd = {
   areaServed: { "@type": "State", name: "New Jersey" },
   knowsAbout: [
     "Government contract painting",
+    "Municipal and public works painting",
+    "School and district facility painting",
     "Commercial painting",
     "Industrial painting",
     "Prevailing wage / Davis-Bacon projects",

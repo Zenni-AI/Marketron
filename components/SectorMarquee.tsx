@@ -3,10 +3,11 @@
 const SECTORS = [
   "Military Installations",
   "Federal & State Facilities",
+  "Municipal & Public Works",
+  "Schools & Education",
   "Warehouses & Distribution",
   "Office & Retail",
   "Multi-Family Housing",
-  "Schools & Municipal",
   "Industrial Plants",
   "Property Management",
 ];

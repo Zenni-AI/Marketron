@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "JVS Painting Inc. — Commercial & Government Painting Contractors in New Jersey";
+  "JVS Painting Inc. — Government, Municipal & Commercial Painting Contractors in New Jersey";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -53,7 +53,7 @@ export default async function OpengraphImage() {
               marginBottom: "26px",
             }}
           >
-            COMMERCIAL &amp; GOVERNMENT PAINTING CONTRACTORS
+            GOVERNMENT, MUNICIPAL &amp; COMMERCIAL PAINTING
           </div>
           <div
             style={{

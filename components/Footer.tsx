@@ -10,7 +10,7 @@ export default function Footer() {
           <div>
             <Logo variant="knockout" className="h-12" />
             <p className="mt-5 max-w-sm text-sm leading-relaxed">
-              Commercial and government contract painting across New Jersey for
+              Government, municipal and commercial painting across New Jersey for
               over four decades.
             </p>
           </div>

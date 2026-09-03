@@ -9,15 +9,17 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const services = [
   {
     label: "Public Work",
-    title: "Government Contract Painting",
+    title: "Government & Municipal Contracts",
     summary:
       "Work performed to the standard a public contract demands — documented, compliant and scheduled around the facility, not the crew.",
     points: [
       "Military and installation facilities",
+      "Municipal buildings, firehouses & public works",
       "E-Verify participating employer",
+      "Schools, districts and county facilities",
       "Prevailing wage / Davis-Bacon familiarity",
-      "Bonded & insured for public contracts",
-      "Flexible scheduling around base operations",
+      "Bonded & insured for public bidding",
+      "Scheduling around base and building operations",
     ],
   },
   {
@@ -44,7 +46,7 @@ export default function Services() {
       tone="tinted"
       eyebrow="What We Do"
       heading="Two disciplines, one standard of finish"
-      subtext="JVS Painting is built around the two kinds of work that leave no room for improvisation: public contracts with compliance requirements, and commercial properties that cannot afford downtime."
+      subtext="JVS Painting is built around the two kinds of work that leave no room for improvisation: public contracts — federal, state and municipal — with the compliance requirements that come with them, and commercial properties that cannot afford downtime."
     >
       <div className="grid gap-6 md:grid-cols-2 md:gap-8">
         {services.map((service, i) => (
