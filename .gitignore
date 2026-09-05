@@ -141,3 +141,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Captured leads and local data
+data/
+
+# Local env
+.env
+.env.local
